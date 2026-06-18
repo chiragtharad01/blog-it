@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resources :posts, only: :index, param: :slug
+  resources :posts, only: %i[index create], param: :slug
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

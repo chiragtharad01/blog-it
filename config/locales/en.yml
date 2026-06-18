@@ -28,6 +28,8 @@
 #       enabled: "ON"
 
 en:
+  successfully_created: "Post was successfully created!"
+  generic_error: "Something went wrong. Please try again later."
   post:
     slug:
       immutable: "is immutable!"
