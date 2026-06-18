@@ -57,17 +57,3 @@ const registerIntercepts = () => {
 };
 
 export { setAuthHeaders, registerIntercepts };
-// const handleSuccessResponse = response => {
-//   if (response) {
-//     response.success = response.status === 200;
-//     if (response.data.notice) {
-//       Toastr.success(response.data.notice);
-//     }
-//   }
-// };
-
-// const registerIntercepts = () => {
-//   axios.interceptors.response.use(handleSuccessResponse);
-// };
-
-// export { setAuthHeaders, registerIntercepts };

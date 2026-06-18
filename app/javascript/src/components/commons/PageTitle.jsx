@@ -4,7 +4,7 @@ import { Button, Typography } from "@bigbinary/neetoui";
 
 const PageTitle = ({ title, button, redirectTo, shouldShowButton }) => (
   <div className="my-8 flex w-full justify-between">
-    <Typography className="text-3xl" style="h2" weight="medium">
+    <Typography className="text-3xl" style="h2" weight="bold">
       {title}
     </Typography>
     {shouldShowButton && (
