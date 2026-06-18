@@ -41,7 +41,7 @@ const Posts = () => {
     <Container>
       <PageTitle title="Blog posts" />
       {posts.map(post => (
-        <Card key={post.title} {...post} />
+        <Card key={post.slug} {...post} />
       ))}
     </Container>
   );
