@@ -1,7 +1,21 @@
 import React from "react";
 
-const PageTitle = ({ title }) => (
-  <h2 className="my-8 w-full text-3xl font-semibold">{title}</h2>
+import { Button, Typography } from "@bigbinary/neetoui";
+
+const PageTitle = ({ title, button, redirectTo, shouldShowButton }) => (
+  <div className="my-8 flex w-full justify-between">
+    <Typography className="text-3xl" style="h2" weight="medium">
+      {title}
+    </Typography>
+    {shouldShowButton && (
+      <Button
+        className="bg-black"
+        label={button}
+        style="primary"
+        to={redirectTo}
+      />
+    )}
+  </div>
 );
 
 export default PageTitle;

@@ -39,7 +39,12 @@ const Posts = () => {
 
   return (
     <Container>
-      <PageTitle title="Blog posts" />
+      <PageTitle
+        shouldShowButton
+        button="Add new blog post"
+        redirectTo="/posts/create"
+        title="Blog posts"
+      />
       {posts.map(post => (
         <Card key={post.slug} {...post} />
       ))}
