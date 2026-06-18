@@ -1,15 +1,10 @@
 import React from "react";
 
-import classnames from "classnames";
+// import { Spinner } from "@bigbinary/neetoui";
 
-const PageLoader = ({ className = "" }) => (
-  <div
-    className={classnames(
-      [className],
-      "flex h-screen w-screen flex-row items-center justify-center"
-    )}
-  >
-    <h1 className="text-lg leading-5">Loading...</h1>
+const PageLoader = () => (
+  <div className="flex h-full w-full items-center justify-center">
+    {/* <Spinner /> */}
   </div>
 );
 
