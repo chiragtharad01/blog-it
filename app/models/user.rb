@@ -1,0 +1,24 @@
+# frozen_string_literal: true
+
+class User < ApplicationRecord
+  MAX_NAME_LENGTH = 125
+  VALID_EMAIL_REGEX = /\A[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}\z/
+  MIN_PASSWORD_LENGTH = 6
+  belongs_to :organization
+  has_many :posts
+  has_secure_password
+  has_secure_token :authentication_token
+
+  validates :name, presence: true, length: { maximum: MAX_NAME_LENGTH }
+  validates :email, presence: true, uniqueness: { case_sensitive: false }, format: { with: VALID_EMAIL_REGEX }
+  validates :password, length: { minimum: MIN_PASSWORD_LENGTH }, if: -> { password.present? }
+  validates :password_confirmation, presence: true, on: :create
+
+  before_save :to_lowercase
+
+  private
+
+    def to_lowercase
+      email.downcase!
+    end
+end

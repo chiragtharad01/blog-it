@@ -2,24 +2,29 @@
 
 class PostsController < ApplicationController
   def index
-    posts = Post.all
-    render_json({ posts: })
+    @posts = Post.includes(:user, :categories).where(users: { organization_id: current_user.organization_id })
+    if params[:category_ids].present?
+      categories = params[:category_ids].split(",")
+      post_ids = @posts.joins(:categories).where(categories: { id: categories }).pluck(:id)
+      @posts = @posts.where(id: post_ids)
+    end
   end
 
   def create
     post = Post.new(post_params)
+    post.user_id = 2
+    post.organization_id = 1
     post.save!
-    render_notice(t("successfully_created"))
+    render_notice(t("successfully_created", entity: "Post"))
   end
 
   def show
-    post = Post.find_by!(slug: params[:slug])
-    render_json({ post: })
+    @post = Post.find_by!(slug: params[:slug])
   end
 
   private
 
     def post_params
-      params.require(:post).permit(:title, :description)
+      params.require(:post).permit(:title, :description, category_ids: [])
     end
 end

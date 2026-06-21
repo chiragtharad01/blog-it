@@ -64,6 +64,7 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
 end
 
+gem "bcrypt"
 gem "connection_pool", "~> 2.4"
 gem "data_migrate"
 gem "react-rails", "~> 2.7.1"

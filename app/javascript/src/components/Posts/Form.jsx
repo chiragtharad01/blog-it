@@ -1,24 +1,58 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-import { Form, Input, Button } from "@bigbinary/neetoui/formik";
+import { Form, Input, Button, Select } from "@bigbinary/neetoui/formik";
 import Logger from "js-logger";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 import { POST_FORM_VALIDATION_SCHEMA } from "./constants";
 
+import categoriesApi from "../../apis/categories";
 import postsApi from "../../apis/posts";
+import { PageLoader } from "../commons";
 
 const PostsForm = () => {
   const history = useHistory();
+  const [isLoading, setIsLoading] = useState(true);
+  const [categories, setCategories] = useState([]);
+  const fetchCategories = async () => {
+    try {
+      const {
+        data: { categories },
+      } = await categoriesApi.fetch();
+
+      const categoryOptions = categories.map(category => ({
+        value: category.id,
+        label: category.name,
+      }));
+      setCategories(categoryOptions);
+    } catch (err) {
+      Logger.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
   const handleSubmit = async values => {
     try {
-      await postsApi.create(values);
+      const payload = {
+        ...values,
+        category_ids: values.category_ids.map(category => category.value),
+      };
+      await postsApi.create(payload);
     } catch (error) {
       Logger.error(error);
     } finally {
       history.push("/dashboard");
     }
   };
+
+  if (isLoading) {
+    return <PageLoader />;
+  }
 
   return (
     <Form
@@ -35,6 +69,15 @@ const PostsForm = () => {
             label="Title"
             name="title"
             placeholder="Enter title"
+          />
+          <Select
+            isMulti
+            isSearchable
+            required
+            label="Category"
+            name="category_ids"
+            options={categories}
+            placeholder="Search category"
           />
           <Input
             required

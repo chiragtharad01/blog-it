@@ -6,8 +6,10 @@ import { Container, PageTitle } from "../commons";
 
 const CreatePost = () => (
   <Container>
-    <PageTitle title="Create post" />
-    <PostsForm />
+    <div className="w-full px-6">
+      <PageTitle title="Create post" />
+      <PostsForm />
+    </div>
   </Container>
 );
 export default CreatePost;
