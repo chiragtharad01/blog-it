@@ -1,7 +1,7 @@
 import { Toastr } from "@bigbinary/neetoui";
 import axios from "axios";
 
-import { getFromLocalStorage, setToLocalStorage } from "../utils/storage";
+import useAuthStore from "../stores/authStore";
 
 axios.defaults.baseURL = "/";
 
@@ -15,11 +15,10 @@ const setAuthHeaders = () => {
       .querySelector('[name="csrf-token"]')
       .getAttribute("content"),
   };
-  const token = getFromLocalStorage("authToken");
-  const email = getFromLocalStorage("authEmail");
-  if (token && email) {
-    axios.defaults.headers["X-Auth-Email"] = email;
-    axios.defaults.headers["X-Auth-Token"] = token;
+  const { authToken, authEmail } = useAuthStore.getState();
+  if (authToken && authEmail) {
+    axios.defaults.headers["X-Auth-Email"] = authEmail;
+    axios.defaults.headers["X-Auth-Token"] = authToken;
   }
 };
 
@@ -36,7 +35,7 @@ const handleSuccessResponse = response => {
 
 const handleErrorResponse = axiosErrorObject => {
   if (axiosErrorObject.response?.status === 401) {
-    setToLocalStorage({ authToken: null, email: null, userId: null });
+    useAuthStore.getState().logout();
     setTimeout(() => (window.location.href = "/"), 2000);
   }
 

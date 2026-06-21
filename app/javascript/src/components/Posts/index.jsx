@@ -13,7 +13,6 @@ import { PageTitle, Container, PageLoader } from "../commons";
 const Posts = () => {
   const location = useLocation();
   const [posts, setPosts] = useState([]);
-  // const [categories, setCategories] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);

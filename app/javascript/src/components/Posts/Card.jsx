@@ -1,7 +1,6 @@
 import React from "react";
 
 import { Typography } from "@bigbinary/neetoui";
-// import isEmpty from "neeto-cist";
 import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
 
 import formatDate from "../utils";

@@ -10,10 +10,10 @@ import { PrivateRoute } from "./components/commons";
 import Posts from "./components/Posts";
 import CreatePost from "./components/Posts/CreatePost";
 import ShowPost from "./components/Posts/Show";
-import { getFromLocalStorage } from "./utils/storage";
+import useAuthStore from "./stores/authStore";
 
 const App = () => {
-  const authToken = getFromLocalStorage("authToken");
+  const authToken = useAuthStore(state => state.authToken);
   const isLoggedIn = !either(isNil, isEmpty)(authToken);
 
   return (
@@ -22,7 +22,6 @@ const App = () => {
       <Switch>
         <Route exact component={ShowPost} path="/posts/:slug/show" />
         <Route exact component={CreatePost} path="/posts/create" />
-        {/* <Route exact component={Posts} path="/dashboard" /> */}
         <Route exact component={Signup} path="/signup" />
         <Route exact component={Login} path="/login" />
         <PrivateRoute

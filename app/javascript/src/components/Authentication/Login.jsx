@@ -4,22 +4,24 @@ import authApi from "apis/auth";
 import { setAuthHeaders } from "apis/axios";
 import LoginForm from "components/Authentication/Form/Login";
 import Logger from "js-logger";
-import { setToLocalStorage } from "utils/storage";
+
+import useAuthStore from "../../stores/authStore";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
-
+  const login = useAuthStore(state => state.login);
   const handleSubmit = async values => {
     event.preventDefault();
     setLoading(true);
     try {
       const response = await authApi.login(values);
-      setToLocalStorage({
+      const loginData = {
         authToken: response.data.authentication_token,
-        email: values.email.toLowerCase(),
-        userId: response.data.id,
-        userName: response.data.name,
-      });
+        authEmail: values.email.toLowerCase(),
+        authUserId: response.data.id,
+        authUserName: response.data.name,
+      };
+      login(loginData);
       setAuthHeaders();
       window.location.href = "/";
     } catch (error) {

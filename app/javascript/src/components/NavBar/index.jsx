@@ -2,29 +2,26 @@ import React, { useRef } from "react";
 
 import { File, LeftArrow, List } from "@bigbinary/neeto-icons";
 import { Avatar, Button, Popover, Typography } from "@bigbinary/neetoui";
+import Logger from "js-logger";
 
 import authApi from "../../apis/auth";
 import { resetAuthTokens } from "../../apis/axios";
-import { getFromLocalStorage, setToLocalStorage } from "../../utils/storage";
+import useAuthStore from "../../stores/authStore";
 
 const NavBar = ({ setIsSidebarOpen }) => {
-  const userName = getFromLocalStorage("authUserName");
-  const email = getFromLocalStorage("authEmail");
+  const userName = useAuthStore(state => state.authUserName);
+  const email = useAuthStore(state => state.authEmail);
+  const logout = useAuthStore(state => state.logout);
   const buttonRef = useRef(null);
 
   const handleLogout = async () => {
     try {
       await authApi.logout();
-      setToLocalStorage({
-        authToken: null,
-        email: null,
-        userId: null,
-        userName: null,
-      });
+      logout();
       resetAuthTokens();
       window.location.href = "/";
     } catch (error) {
-      logger.error(error);
+      Logger.error(error);
     }
   };
 

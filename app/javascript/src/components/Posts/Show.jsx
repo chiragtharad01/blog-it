@@ -34,7 +34,6 @@ const ShowPost = () => {
   if (isLoading) {
     return (
       <Container>
-        {/* <PageTitle title="Blog posts" /> */}
         <PageLoader />
       </Container>
     );
