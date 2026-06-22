@@ -1,35 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import { Avatar, Typography } from "@bigbinary/neetoui";
-import Logger from "js-logger";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
-import postsApi from "../../apis/posts";
+import { usePost } from "../../hooks/reactQuery/usePostsApi";
 import { Container, PageLoader } from "../commons";
 import formatDate from "../utils";
 
 const ShowPost = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [post, setPost] = useState(null);
   const { slug } = useParams();
-
-  useEffect(() => {
-    const loadPostDetails = async () => {
-      try {
-        const {
-          data: { post },
-        } = await postsApi.show(slug);
-
-        setPost(post);
-      } catch (err) {
-        Logger.error(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    loadPostDetails();
-  }, [slug]);
+  const { data: { data: { post = {} } = {} } = {}, isLoading } = usePost(slug);
 
   if (isLoading) {
     return (

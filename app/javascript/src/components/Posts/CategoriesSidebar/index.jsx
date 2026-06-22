@@ -3,15 +3,13 @@ import React, { useEffect, useState } from "react";
 import { Plus, Search } from "@bigbinary/neeto-icons";
 import { Button, Input, Typography } from "@bigbinary/neetoui";
 import classNames from "classnames";
-import Logger from "js-logger";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
-import categoriesApi from "../../../apis/categories";
+import { useCategories } from "../../../hooks/reactQuery/useCategoriesApi";
 import useDebounce from "../../../utils/useDebounce";
 
 const CategoriesSidebar = ({ setIsModalOpen }) => {
   const history = useHistory();
-  const [categories, setCategories] = useState([]);
   const searchParams = new URLSearchParams(location.search);
   const [selectedCategories, setSelectedCategories] = useState(
     searchParams.get("category_ids")
@@ -21,6 +19,9 @@ const CategoriesSidebar = ({ setIsModalOpen }) => {
   const [searchInput, setSearchInput] = useState("");
   const [showSearch, setShowSearch] = useState(false);
   const debouncedSearchInput = useDebounce(searchInput);
+  const { data: { data: { categories = [] } = {} } = {} } =
+    useCategories(debouncedSearchInput);
+
   const handleCategoryClick = categoryId => {
     setSelectedCategories(previousCategories =>
       previousCategories.includes(categoryId)
@@ -29,25 +30,9 @@ const CategoriesSidebar = ({ setIsModalOpen }) => {
     );
   };
 
-  const fetchCategories = async search => {
-    try {
-      const {
-        data: { categories },
-      } = await categoriesApi.fetch({ search });
-      setCategories(categories);
-    } catch (error) {
-      Logger.error(error);
-    }
-  };
-
   const handleChange = e => {
     setSearchInput(e.target.value);
   };
-
-  useEffect(() => {
-    if (debouncedSearchInput) fetchCategories(debouncedSearchInput);
-    else fetchCategories();
-  }, [debouncedSearchInput]);
 
   useEffect(() => {
     if (selectedCategories.length > 0) {

@@ -6,12 +6,13 @@ import Logger from "js-logger";
 
 import { CATEGORY_VALIDATION_SCHEMA } from "./constants";
 
-import categoriesApi from "../../apis/categories";
+import { useCreateCategory } from "../../hooks/reactQuery/useCategoriesApi";
 
 const CreateCategoryModal = ({ isModalOpen, setIsModalOpen }) => {
+  const createCategory = useCreateCategory();
   const handleSubmit = async values => {
     try {
-      await categoriesApi.create(values);
+      await createCategory.mutateAsync(values);
     } catch (error) {
       Logger.error(error);
     } finally {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import { Form, Input, Button, Select } from "@bigbinary/neetoui/formik";
 import Logger from "js-logger";
@@ -6,35 +6,20 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 import { POST_FORM_VALIDATION_SCHEMA } from "./constants";
 
-import categoriesApi from "../../apis/categories";
-import postsApi from "../../apis/posts";
+import { useCategories } from "../../hooks/reactQuery/useCategoriesApi";
+import { useCreatePost } from "../../hooks/reactQuery/usePostsApi";
 import { PageLoader } from "../commons";
 
 const PostsForm = () => {
   const history = useHistory();
-  const [isLoading, setIsLoading] = useState(true);
-  const [categories, setCategories] = useState([]);
-  const fetchCategories = async () => {
-    try {
-      const {
-        data: { categories },
-      } = await categoriesApi.fetch();
+  const { data: { data: { categories = [] } = {} } = {}, isLoading } =
+    useCategories();
 
-      const categoryOptions = categories.map(category => ({
-        value: category.id,
-        label: category.name,
-      }));
-      setCategories(categoryOptions);
-    } catch (err) {
-      Logger.error(err);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchCategories();
-  }, []);
+  const categoryOptions = categories.map(category => ({
+    value: category.id,
+    label: category.name,
+  }));
+  const createPost = useCreatePost();
 
   const handleSubmit = async values => {
     try {
@@ -42,11 +27,10 @@ const PostsForm = () => {
         ...values,
         category_ids: values.category_ids.map(category => category.value),
       };
-      await postsApi.create(payload);
+      await createPost.mutateAsync(payload);
+      history.push("/dashboard");
     } catch (error) {
       Logger.error(error);
-    } finally {
-      history.push("/dashboard");
     }
   };
 
@@ -57,7 +41,7 @@ const PostsForm = () => {
   return (
     <Form
       formikProps={{
-        initialValues: { title: "", description: "" },
+        initialValues: { title: "", description: "", category_ids: [] },
         validationSchema: POST_FORM_VALIDATION_SCHEMA,
         onSubmit: handleSubmit,
       }}
@@ -76,7 +60,7 @@ const PostsForm = () => {
             required
             label="Category"
             name="category_ids"
-            options={categories}
+            options={categoryOptions}
             placeholder="Search category"
           />
           <Input
@@ -94,7 +78,13 @@ const PostsForm = () => {
             style="tertiary"
             type="cancel"
           />
-          <Button className="w-20 bg-black" label="Submit" type="submit" />
+          <Button
+            className="w-20 bg-black"
+            disabled={createPost.isLoading}
+            label="Submit"
+            loading={createPost.isLoading}
+            type="submit"
+          />
         </div>
       </div>
     </Form>

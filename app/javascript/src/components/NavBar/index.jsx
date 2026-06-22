@@ -4,8 +4,8 @@ import { File, LeftArrow, List } from "@bigbinary/neeto-icons";
 import { Avatar, Button, Popover, Typography } from "@bigbinary/neetoui";
 import Logger from "js-logger";
 
-import authApi from "../../apis/auth";
 import { resetAuthTokens } from "../../apis/axios";
+import { useLogout } from "../../hooks/reactQuery/useAuthApi";
 import useAuthStore from "../../stores/authStore";
 
 const NavBar = ({ setIsSidebarOpen }) => {
@@ -13,10 +13,10 @@ const NavBar = ({ setIsSidebarOpen }) => {
   const email = useAuthStore(state => state.authEmail);
   const logout = useAuthStore(state => state.logout);
   const buttonRef = useRef(null);
-
+  const logoutMutation = useLogout();
   const handleLogout = async () => {
     try {
-      await authApi.logout();
+      await logoutMutation.mutateAsync();
       logout();
       resetAuthTokens();
       window.location.href = "/";

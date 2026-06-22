@@ -1,20 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 
-import authApi from "apis/auth";
 import { setAuthHeaders } from "apis/axios";
 import LoginForm from "components/Authentication/Form/Login";
 import Logger from "js-logger";
 
+import { useLogin } from "../../hooks/reactQuery/useAuthApi";
 import useAuthStore from "../../stores/authStore";
 
 const Login = () => {
-  const [loading, setLoading] = useState(false);
   const login = useAuthStore(state => state.login);
+  const loginMutation = useLogin();
   const handleSubmit = async values => {
     event.preventDefault();
-    setLoading(true);
     try {
-      const response = await authApi.login(values);
+      const response = await loginMutation.mutateAsync(values);
       const loginData = {
         authToken: response.data.authentication_token,
         authEmail: values.email.toLowerCase(),
@@ -26,13 +25,17 @@ const Login = () => {
       window.location.href = "/";
     } catch (error) {
       Logger.error(error);
-      setLoading(false);
     }
   };
 
   return (
     <div className="flex h-screen items-center justify-center">
-      <LoginForm handleSubmit={handleSubmit} loading={loading} />;
+      <LoginForm
+        disabled={loginMutation.isLoading}
+        handleSubmit={handleSubmit}
+        loading={loginMutation.isLoading}
+      />
+      ;
     </div>
   );
 };
