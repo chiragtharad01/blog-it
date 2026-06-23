@@ -53,7 +53,11 @@ const EditPost = () => {
       >
         {formikProps => (
           <div className="w-full px-6">
-            <PageTitle formikProps={formikProps} title="Edit post" />
+            <PageTitle
+              editTaskSlug={slug}
+              formikProps={formikProps}
+              title="Edit post"
+            />
             <EditForm />
           </div>
         )}

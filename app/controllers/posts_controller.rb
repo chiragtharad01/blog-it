@@ -28,6 +28,12 @@ class PostsController < ApplicationController
     render_notice(t("successfully_updated", entity: "Post")) unless params.key?(:quite)
   end
 
+  def destroy
+    post = Post.find_by!(slug: params[:slug])
+    post.destroy!
+    render_notice(t("successfully_deleted", entity: "Post"))
+  end
+
   private
 
     def post_params

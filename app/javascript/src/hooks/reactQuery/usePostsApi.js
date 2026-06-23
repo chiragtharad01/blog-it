@@ -39,3 +39,13 @@ export const useEditPost = () => {
     }
   );
 };
+
+export const useDeletePost = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation(slug => postsApi.destroy(slug), {
+    onSuccess: () => {
+      queryClient.invalidateQueries(QUERY_KEYS.POSTS);
+    },
+  });
+};
