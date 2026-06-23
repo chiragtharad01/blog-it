@@ -55,7 +55,7 @@ const ShowPost = () => {
             <div>
               <Typography style="h6">{post.user.name}</Typography>
               <Typography style="body3">
-                {formatDate(post.created_at)}
+                {formatDate(post.updated_at)}
               </Typography>
             </div>
           </div>

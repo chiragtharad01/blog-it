@@ -25,12 +25,12 @@ class PostsController < ApplicationController
   def update
     post = Post.find_by!(slug: params[:slug])
     post.update!(post_params)
-    render_notice("Post was successfully updated!")
+    render_notice(t("successfully_updated", entity: "Post")) unless params.key?(:quite)
   end
 
   private
 
     def post_params
-      params.require(:post).permit(:title, :description, category_ids: [])
+      params.require(:post).permit(:title, :description, :status, category_ids: [])
     end
 end

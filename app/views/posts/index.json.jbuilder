@@ -5,7 +5,8 @@ json.posts @posts do |post|
     :id,
     :title,
     :slug,
-    :created_at
+    :created_at,
+    :status
   json.user do
     json.extract! post.user,
       :id,

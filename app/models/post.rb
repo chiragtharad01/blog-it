@@ -5,6 +5,7 @@ class Post < ApplicationRecord
   MAX_DESCRIPTION_LENGTH = 10000
   VALID_TITLE_REGEX = /\A.*[a-zA-Z0-9].*\z/i
 
+  enum :status, { draft: "draft", publish: "publish" }, default: :draft
   has_and_belongs_to_many :categories
   belongs_to :user
   belongs_to :organization
