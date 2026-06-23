@@ -10,7 +10,7 @@ import { PrivateRoute } from "./components/commons";
 import QueryProvider from "./components/commons/QueryProvider";
 import Posts from "./components/Posts";
 import CreatePost from "./components/Posts/CreatePost";
-import EditTask from "./components/Posts/Edit";
+import EditPost from "./components/Posts/EditPost";
 import ShowPost from "./components/Posts/Show";
 import useAuthStore from "./stores/authStore";
 
@@ -22,7 +22,7 @@ const AppContent = () => {
     <Router>
       <ToastContainer />
       <Switch>
-        <Route exact component={EditTask} path="/posts/:slug/edit" />
+        <Route exact component={EditPost} path="/posts/:slug/edit" />
         <Route exact component={ShowPost} path="/posts/:slug/show" />
         <Route exact component={CreatePost} path="/posts/create" />
         <Route exact component={Signup} path="/signup" />
