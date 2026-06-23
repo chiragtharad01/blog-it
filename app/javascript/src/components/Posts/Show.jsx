@@ -1,6 +1,7 @@
 import React from "react";
 
-import { Avatar, Typography } from "@bigbinary/neetoui";
+import { Edit } from "@bigbinary/neeto-icons";
+import { Avatar, Button, Typography } from "@bigbinary/neetoui";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
 import { usePost } from "../../hooks/reactQuery/usePostsApi";
@@ -34,9 +35,17 @@ const ShowPost = () => {
           ))}
         </div>
         <div className="flex flex-col gap-3">
-          <Typography className="text-3xl" style="h2" weight="bold">
-            {post.title}
-          </Typography>
+          <div className="flex justify-between">
+            <Typography className="text-3xl" style="h2" weight="bold">
+              {post.title}
+            </Typography>
+            <Button
+              className="text-black"
+              icon={Edit}
+              style="link"
+              to={`/posts/${slug}/edit`}
+            />
+          </div>
           <div className="flex gap-4">
             <Avatar
               user={{

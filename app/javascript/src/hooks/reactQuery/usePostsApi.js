@@ -26,3 +26,16 @@ export const useCreatePost = () => {
     },
   });
 };
+
+export const useEditPost = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation(
+    ({ slug, payload }) => postsApi.update({ slug, payload }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(QUERY_KEYS.POST, QUERY_KEYS.POSTS);
+      },
+    }
+  );
+};

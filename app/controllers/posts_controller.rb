@@ -22,6 +22,12 @@ class PostsController < ApplicationController
     @post = Post.find_by!(slug: params[:slug])
   end
 
+  def update
+    post = Post.find_by!(slug: params[:slug])
+    post.update!(post_params)
+    render_notice("Post was successfully updated!")
+  end
+
   private
 
     def post_params
