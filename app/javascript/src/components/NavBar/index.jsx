@@ -1,14 +1,18 @@
 import React, { useRef } from "react";
 
-import { File, LeftArrow, List } from "@bigbinary/neeto-icons";
+import { File, LeftArrow, List, Templates } from "@bigbinary/neeto-icons";
 import { Avatar, Button, Popover, Typography } from "@bigbinary/neetoui";
 import Logger from "js-logger";
+import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
 import { resetAuthTokens } from "../../apis/axios";
 import { useLogout } from "../../hooks/reactQuery/useAuthApi";
 import useAuthStore from "../../stores/authStore";
+import { getButtonProps } from "../utils";
 
-const NavBar = ({ setIsSidebarOpen }) => {
+const NavBar = ({ setIsSidebarOpen, isSidebarOpen }) => {
+  const location = useLocation();
+  const isActive = path => location.pathname === path;
   const userName = useAuthStore(state => state.authUserName);
   const email = useAuthStore(state => state.authEmail);
   const logout = useAuthStore(state => state.logout);
@@ -29,12 +33,23 @@ const NavBar = ({ setIsSidebarOpen }) => {
     <header className="bg-primary-white w-18 sticky top-0 z-20 h-screen min-h-screen border-r-2 border-gray-100 transition-all duration-500">
       <div className="flex h-full flex-col items-center justify-between py-5">
         <div className="flex w-16 flex-col items-center gap-2">
-          <Button icon={File} iconSize={16} style="tertiary" to="/dashboard" />
+          <Button
+            icon={File}
+            iconSize={16}
+            to="/dashboard"
+            {...getButtonProps(isActive("/dashboard"))}
+          />
           <Button
             icon={List}
             iconSize={16}
-            style="tertiary"
+            {...getButtonProps(isSidebarOpen)}
             onClick={() => setIsSidebarOpen(prev => !prev)}
+          />
+          <Button
+            icon={Templates}
+            iconSize={16}
+            {...getButtonProps(isActive("/posts/myposts"))}
+            to="/posts/myposts"
           />
         </div>
         <div>

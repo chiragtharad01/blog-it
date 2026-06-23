@@ -6,12 +6,12 @@ import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
 import { usePost } from "../../hooks/reactQuery/usePostsApi";
 import { Container, PageLoader } from "../commons";
-import formatDate from "../utils";
+import { formatDate } from "../utils";
 
 const ShowPost = () => {
   const { slug } = useParams();
   const { data: { data: { post = {} } = {} } = {}, isLoading } = usePost(slug);
-
+  const showTag = post.status === "draft";
   if (isLoading) {
     return (
       <Container>
@@ -36,9 +36,19 @@ const ShowPost = () => {
         </div>
         <div className="flex flex-col gap-3">
           <div className="flex justify-between">
-            <Typography className="text-3xl" style="h2" weight="bold">
-              {post.title}
-            </Typography>
+            <div className="flex items-center gap-2">
+              <Typography className="text-3xl" style="h2" weight="bold">
+                {post.title}
+              </Typography>
+              {showTag && (
+                <Typography
+                  className="neeto-ui-rounded-full h-min min-w-min border border-red-500 px-3 py-0 text-red-500"
+                  style="nano"
+                >
+                  {post.status}
+                </Typography>
+              )}
+            </div>
             <Button
               className="text-black"
               icon={Edit}

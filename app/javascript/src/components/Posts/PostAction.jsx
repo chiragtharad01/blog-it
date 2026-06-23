@@ -1,0 +1,79 @@
+import React, { useState } from "react";
+
+import { MenuHorizontal } from "@bigbinary/neeto-icons";
+import { Alert, Dropdown } from "@bigbinary/neetoui";
+import Logger from "js-logger";
+
+import {
+  useDeletePost,
+  useUpdatePostStatus,
+} from "../../hooks/reactQuery/usePostsApi";
+
+const PostAction = ({ post }) => {
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const updateStatus = useUpdatePostStatus();
+  const deletePost = useDeletePost();
+  const handleUpdateStatus = async status => {
+    try {
+      await updateStatus.mutateAsync({ slug: post.slug, status });
+    } catch (error) {
+      Logger.error(error);
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      await deletePost.mutateAsync(post.slug);
+    } catch (error) {
+      Logger.error(error);
+    }
+  };
+
+  return (
+    <>
+      <Dropdown
+        buttonStyle="secondary"
+        icon={MenuHorizontal}
+        strategy="fixed"
+        buttonProps={{
+          className: "display-none bg-white",
+        }}
+      >
+        <Dropdown.Menu>
+          {post.status === "draft" ? (
+            <Dropdown.MenuItem.Button
+              onClick={() => handleUpdateStatus("publish")}
+            >
+              Publish
+            </Dropdown.MenuItem.Button>
+          ) : (
+            <Dropdown.MenuItem.Button
+              onClick={() => handleUpdateStatus("draft")}
+            >
+              Unpublish
+            </Dropdown.MenuItem.Button>
+          )}
+          <Dropdown.Divider />
+          <Dropdown.MenuItem.Button
+            style="danger"
+            onClick={() => setIsAlertOpen(true)}
+          >
+            Delete
+          </Dropdown.MenuItem.Button>
+        </Dropdown.Menu>
+      </Dropdown>
+      <Alert
+        isOpen={isAlertOpen}
+        message={`"${post.title}" will get permanently deleted. Proceed?`}
+        title={`Delete "${post.title}?"`}
+        onClose={() => setIsAlertOpen(false)}
+        onSubmit={() => {
+          handleDelete();
+          setIsAlertOpen(false);
+        }}
+      />
+    </>
+  );
+};
+
+export default PostAction;

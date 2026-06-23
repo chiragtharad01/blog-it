@@ -4,9 +4,14 @@ import classnames from "classnames";
 import NavBar from "components/NavBar";
 import PropTypes from "prop-types";
 
-const Container = ({ children, className = "", setIsSidebarOpen }) => (
+const Container = ({
+  children,
+  className = "",
+  setIsSidebarOpen,
+  isSidebarOpen,
+}) => (
   <div className="flex ">
-    <NavBar setIsSidebarOpen={setIsSidebarOpen} />
+    <NavBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
     <div className={classnames("w-11/12", [className])}>{children}</div>
   </div>
 );

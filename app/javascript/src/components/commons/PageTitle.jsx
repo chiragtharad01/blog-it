@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Delete } from "@bigbinary/neeto-icons";
-import { ActionDropdown, Button, Typography } from "@bigbinary/neetoui";
+import { ActionDropdown, Alert, Button, Typography } from "@bigbinary/neetoui";
 import Logger from "js-logger";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
@@ -15,6 +15,7 @@ const PageTitle = ({
   formikProps,
   editTaskSlug,
 }) => {
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
   const history = useHistory();
   const deletePost = useDeletePost();
   const handleDelete = async () => {
@@ -28,12 +29,12 @@ const PageTitle = ({
 
   return (
     <div className="my-8 flex w-full items-center justify-between">
-      <Typography className="text-3xl" style="h2" weight="bold">
+      <Typography className="w-full text-3xl" style="h2" weight="bold">
         {title}
       </Typography>
       {shouldShowButton && (
         <Button
-          className="bg-black"
+          className="min-w-max bg-black"
           label={button}
           style="primary"
           to={redirectTo}
@@ -88,7 +89,7 @@ const PageTitle = ({
                   <ActionDropdown.MenuItem.Button
                     prefix={<Delete size={20} />}
                     style="danger"
-                    onClick={handleDelete}
+                    onClick={() => setIsAlertOpen(true)}
                   >
                     Delete
                   </ActionDropdown.MenuItem.Button>
@@ -96,6 +97,16 @@ const PageTitle = ({
               )}
             </ActionDropdown.Menu>
           </ActionDropdown>
+          <Alert
+            isOpen={isAlertOpen}
+            message={`"${formikProps.values.title}" will get permanently deleted. Proceed?`}
+            title={`Delete "${formikProps.values.title}?"`}
+            onClose={() => setIsAlertOpen(false)}
+            onSubmit={() => {
+              handleDelete();
+              setIsAlertOpen(false);
+            }}
+          />
         </div>
       )}
     </div>

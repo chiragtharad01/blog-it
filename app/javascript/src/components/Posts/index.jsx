@@ -30,7 +30,10 @@ const Posts = () => {
   }
 
   return (
-    <Container setIsSidebarOpen={setIsSidebarOpen}>
+    <Container
+      isSidebarOpen={isSidebarOpen}
+      setIsSidebarOpen={setIsSidebarOpen}
+    >
       <div className="flex">
         {isSidebarOpen && <CategoriesSidebar setIsModalOpen={setIsModalOpen} />}
         <div className="w-full px-6">

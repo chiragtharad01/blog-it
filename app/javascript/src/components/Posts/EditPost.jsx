@@ -11,13 +11,19 @@ import { POST_FORM_VALIDATION_SCHEMA } from "./constants";
 import EditForm from "./EditForm";
 
 import { useEditPost, usePost } from "../../hooks/reactQuery/usePostsApi";
-import { Container, PageTitle } from "../commons";
+import { Container, PageLoader, PageTitle } from "../commons";
 
 const EditPost = () => {
   const { slug } = useParams();
-  const { data: { data: { post = {} } = {} } = {} } = usePost(slug);
+  const { data: { data: { post = {} } = {} } = {}, isLoading } = usePost(slug);
 
-  const { title, description, categories: category_ids = [], status } = post;
+  const {
+    title = "",
+    description = "",
+    categories: category_ids = [],
+    status = "",
+  } = post;
+
   const defaultCategoryOptions = category_ids.map(category => ({
     value: category.id,
     label: category.name,
@@ -36,6 +42,13 @@ const EditPost = () => {
       Logger.error(error);
     }
   };
+  if (isLoading) {
+    return (
+      <Container>
+        <PageLoader />
+      </Container>
+    );
+  }
 
   return (
     <Container>

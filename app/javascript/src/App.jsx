@@ -11,6 +11,7 @@ import QueryProvider from "./components/commons/QueryProvider";
 import Posts from "./components/Posts";
 import CreatePost from "./components/Posts/CreatePost";
 import EditPost from "./components/Posts/EditPost";
+import PostsCurrentUser from "./components/Posts/PostsCurrentUser";
 import ShowPost from "./components/Posts/Show";
 import useAuthStore from "./stores/authStore";
 
@@ -22,6 +23,7 @@ const AppContent = () => {
     <Router>
       <ToastContainer />
       <Switch>
+        <Route exact component={PostsCurrentUser} path="/posts/myposts" />
         <Route exact component={EditPost} path="/posts/:slug/edit" />
         <Route exact component={ShowPost} path="/posts/:slug/show" />
         <Route exact component={CreatePost} path="/posts/create" />

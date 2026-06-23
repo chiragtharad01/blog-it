@@ -3,7 +3,7 @@ import React from "react";
 import { Typography } from "@bigbinary/neetoui";
 import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
 
-import formatDate from "../utils";
+import { formatDate } from "../utils";
 
 const Card = ({ slug, title, description, created_at, user, categories }) => (
   <div className="flex w-full flex-col justify-center gap-2 border-b-2 border-gray-200 py-2">

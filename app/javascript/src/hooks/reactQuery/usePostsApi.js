@@ -49,3 +49,16 @@ export const useDeletePost = () => {
     },
   });
 };
+
+export const useUpdatePostStatus = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation(
+    ({ slug, status }) => postsApi.updateStatus(slug, status),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(QUERY_KEYS.POSTS, QUERY_KEYS.POST);
+      },
+    }
+  );
+};
