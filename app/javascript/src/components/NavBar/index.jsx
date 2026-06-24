@@ -3,6 +3,7 @@ import React, { useRef } from "react";
 import { File, LeftArrow, List, Templates } from "@bigbinary/neeto-icons";
 import { Avatar, Button, Popover, Typography } from "@bigbinary/neetoui";
 import Logger from "js-logger";
+import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
 import { resetAuthTokens } from "../../apis/axios";
@@ -11,6 +12,7 @@ import useAuthStore from "../../stores/authStore";
 import { getButtonProps } from "../utils";
 
 const NavBar = ({ setIsSidebarOpen, isSidebarOpen }) => {
+  const { t } = useTranslation();
   const location = useLocation();
   const isActive = path => location.pathname === path;
   const userName = useAuthStore(state => state.authUserName);
@@ -78,7 +80,7 @@ const NavBar = ({ setIsSidebarOpen, isSidebarOpen }) => {
                   className="p-0 pt-2 text-black"
                   icon={LeftArrow}
                   iconPosition="left"
-                  label="Logout"
+                  label={t("logout")}
                   size="small"
                   style="link"
                   onClick={handleLogout}

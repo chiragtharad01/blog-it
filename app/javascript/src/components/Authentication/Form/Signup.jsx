@@ -1,10 +1,13 @@
 import React from "react";
 
+import { Typography } from "@bigbinary/neetoui";
 import { Button, Form, Input } from "@bigbinary/neetoui/formik";
+import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
 
+import withT from "../../../utils/withT";
 import { SIGNUP_FORM_VALIDATION_SCHEMA } from "../constants";
 
-const SignupForm = ({ handleSubmit }) => (
+const SignupForm = ({ handleSubmit, t }) => (
   <Form
     formikProps={{
       initialValues: {
@@ -18,37 +21,47 @@ const SignupForm = ({ handleSubmit }) => (
     }}
   >
     <div className="neeto-ui-rounded flex h-full w-96  flex-col items-start justify-center gap-2 border-2 px-10 py-8">
+      <div className="mb-2 flex w-full flex-col items-center gap-1">
+        <Typography className="text-3xl" style="h4" weight="bold">
+          {t("signupTitle")}
+        </Typography>
+        <NavLink to="/login">
+          <Typography className="w-full text-blue-400" style="body2">
+            {t("yesAccount")}
+          </Typography>
+        </NavLink>
+      </div>
       <div className="flex w-full flex-col gap-6">
         <Input required label="Name" name="name" placeholder="Enter name" />
         <Input
           required
-          label="Email"
+          label={t("form.email")}
           name="email"
-          placeholder="Enter email"
+          placeholder={t("form.emailPlaceholder")}
           size="large"
           type="email"
         />
         <Input
           required
-          label="Password"
+          label={t("form.password")}
           name="password"
-          placeholder="Enter password"
+          placeholder={t("form.passwordPlaceholder")}
           type="password"
         />
         <Input
           required
-          label="Confirm password"
-          name="password_confirmation"
-          placeholder="Re enter password"
+          label={t("form.confirmPassword")}
+          name="password"
+          placeholder={t("form.confirmPasswordPlaceholder")}
           size="large"
           type="password"
         />
       </div>
       <div className="mt-4 flex w-full justify-end gap-2">
-        <Button className="w-20 bg-black" label="Submit" type="submit" />
+        <Button className="w-20 bg-black" label={t("submit")} type="submit" />
       </div>
     </div>
   </Form>
 );
 
-export default SignupForm;
+export default withT(SignupForm);

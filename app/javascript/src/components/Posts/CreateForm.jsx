@@ -1,11 +1,13 @@
 import React from "react";
 
 import { Input, Select } from "@bigbinary/neetoui/formik";
+import { useTranslation } from "react-i18next";
 
 import { useCategories } from "../../hooks/reactQuery/useCategoriesApi";
 import { PageLoader } from "../commons";
 
 const CreateForm = () => {
+  const { t } = useTranslation();
   const { data: { data: { categories = [] } = {} } = {}, isLoading } =
     useCategories();
 
@@ -20,21 +22,26 @@ const CreateForm = () => {
   return (
     <div className="neeto-ui-rounded flex w-full  flex-col items-start justify-between gap-2 border-2 px-10 py-8">
       <div className="flex w-full flex-col gap-6">
-        <Input required label="Title" name="title" placeholder="Enter title" />
+        <Input
+          required
+          label={t("post.create.inputTitle")}
+          name="title"
+          placeholder={t("post.create.inputTitlePlaceholder")}
+        />
         <Select
           isMulti
           isSearchable
           required
-          label="Category"
+          label={t("post.create.inputCategory")}
           name="category_ids"
           options={categoryOptions}
-          placeholder="Search category"
+          placeholder={t("post.create.inputCategoryPlaceholder")}
         />
         <Input
           required
-          label="Description"
+          label={t("post.create.inputDescription")}
           name="description"
-          placeholder="Enter description"
+          placeholder={t("post.create.inputDescriptionPlaceholder")}
           size="large"
         />
       </div>

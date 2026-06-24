@@ -1,3 +1,69 @@
 {
-  "helloWorld": "Hello World"
+  "noAccount": "Don't have an account? Click here...",
+  "yesAccount": "Already have an account? Click here...",
+  "loginTitle": "Login",
+  "signupTitle": "Signup",
+  "logout": "Logout",
+  "submit": "Submit",
+  "form": {
+    "email": "Email",
+    "emailPlaceholder": "Enter email",
+    "password": "Password",
+    "passwordPlaceholder": "Enter password",
+    "confirmPassword": "Confirm password",
+    "confirmPasswordPlaceholder": "Re enter password"
+  },
+  "post": {
+    "table": {
+      "title": {
+        "title": "title",
+        "category": "category",
+        "lastPublishedAt": "Last published at",
+        "status": "status",
+        "action": "action"
+      }
+    },
+    "homeTitle": "Blog posts",
+    "homeButton": "Add new blog post",
+    "secondTitle": "My blog posts",
+    "status": {
+      "saveAsDraft": "Save as draft",
+      "publish": "Publish",
+      "delete": "Delete",
+      "unpublish": "Unpublish",
+      "cancel": "Cancel"
+    },
+    "delete": {
+      "title": "Delete \"{{title}}\"?",
+      "message": "\"{{title}}\" will get permanently deleted. Proceed?"
+    },
+    "create": {
+      "title": "Create post",
+      "editTitle": "Edit post",
+      "inputTitle": "Title",
+      "inputTitlePlaceholder": "Enter title",
+      "inputCategory": "Category",
+      "inputCategoryPlaceholder": "Search category",
+      "inputDescription": "Description",
+      "inputDescriptionPlaceholder": "Enter description"
+    }
+  },
+  "categories": {
+    "title": "CATEGORIES",
+    "modal": {
+      "title": "New category",
+      "enterTitle": "Category title",
+      "enterTitlePlaceholder": "Enter title",
+      "cancel": "Cancel"
+    }
+  },
+  "validation": {
+    "post": {
+      "title": "Title is required",
+      "description": "Description is required"
+    },
+    "category": {
+      "name": "Category name is required"
+    }
+  }
 }

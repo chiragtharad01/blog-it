@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
 import Card from "./Card";
@@ -10,9 +11,8 @@ import { usePosts } from "../../hooks/reactQuery/usePostsApi";
 import { PageTitle, Container, PageLoader } from "../commons";
 
 const Posts = () => {
+  const { t } = useTranslation();
   const location = useLocation();
-  // const [posts, setPosts] = useState([]);
-  // const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const searchParams = new URLSearchParams(location.search);
@@ -23,7 +23,7 @@ const Posts = () => {
   if (isLoading) {
     return (
       <Container>
-        <PageTitle title="Blog posts" />
+        <PageTitle title={t("post.homeTitle")} />
         <PageLoader />
       </Container>
     );
@@ -39,9 +39,9 @@ const Posts = () => {
         <div className="w-full px-6">
           <PageTitle
             shouldShowButton
-            button="Add new blog post"
+            button={t("post.homeButton")}
             redirectTo="/posts/create"
-            title="Blog posts"
+            title={t("post.homeTitle")}
           />
           {isModalOpen && (
             <CreateCategoryModal

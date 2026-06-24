@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Delete } from "@bigbinary/neeto-icons";
 import { ActionDropdown, Alert, Button, Typography } from "@bigbinary/neetoui";
 import Logger from "js-logger";
+import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 import { useDeletePost } from "../../hooks/reactQuery/usePostsApi";
@@ -15,6 +16,7 @@ const PageTitle = ({
   formikProps,
   editTaskSlug,
 }) => {
+  const { t } = useTranslation();
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const history = useHistory();
   const deletePost = useDeletePost();
@@ -44,7 +46,7 @@ const PageTitle = ({
         <div className="flex h-min w-full justify-end gap-2">
           <Button
             className="w-20"
-            label="Cancel"
+            label={t("post.status.cancel")}
             style="tertiary"
             to="/dashboard"
             type="cancel"
@@ -61,8 +63,8 @@ const PageTitle = ({
             }}
             label={
               formikProps.values.status === "draft"
-                ? "Save as Draft"
-                : "Publish"
+                ? t("post.status.saveAsDraft")
+                : t("post.status.publish")
             }
             onClick={() => {
               formikProps.submitForm();
@@ -74,14 +76,14 @@ const PageTitle = ({
                   formikProps.setFieldValue("status", "draft");
                 }}
               >
-                Save as draft
+                {t("post.status.saveAsDraft")}
               </ActionDropdown.MenuItem.Button>
               <ActionDropdown.MenuItem.Button
                 onClick={() => {
                   formikProps.setFieldValue("status", "publish");
                 }}
               >
-                Publish
+                {t("post.status.publish")}
               </ActionDropdown.MenuItem.Button>
               {editTaskSlug && (
                 <>
@@ -91,7 +93,7 @@ const PageTitle = ({
                     style="danger"
                     onClick={() => setIsAlertOpen(true)}
                   >
-                    Delete
+                    {t("post.status.delete")}
                   </ActionDropdown.MenuItem.Button>
                 </>
               )}
@@ -99,8 +101,12 @@ const PageTitle = ({
           </ActionDropdown>
           <Alert
             isOpen={isAlertOpen}
-            message={`"${formikProps.values.title}" will get permanently deleted. Proceed?`}
-            title={`Delete "${formikProps.values.title}?"`}
+            message={t("post.delete.message", {
+              title: formikProps.values.title,
+            })}
+            title={t("post.delete.title", {
+              title: formikProps.values.title,
+            })}
             onClose={() => setIsAlertOpen(false)}
             onSubmit={() => {
               handleDelete();

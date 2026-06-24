@@ -2,6 +2,7 @@ import React from "react";
 
 import { Form } from "@bigbinary/neetoui/formik";
 import Logger from "js-logger";
+import { useTranslation } from "react-i18next";
 import {
   useHistory,
   useParams,
@@ -14,6 +15,7 @@ import { useEditPost, usePost } from "../../hooks/reactQuery/usePostsApi";
 import { Container, PageLoader, PageTitle } from "../commons";
 
 const EditPost = () => {
+  const { t } = useTranslation();
   const { slug } = useParams();
   const { data: { data: { post = {} } = {} } = {}, isLoading } = usePost(slug);
 
@@ -69,7 +71,7 @@ const EditPost = () => {
             <PageTitle
               editTaskSlug={slug}
               formikProps={formikProps}
-              title="Edit post"
+              title={t("post.create.editTitle")}
             />
             <EditForm />
           </div>

@@ -1,6 +1,7 @@
 import React from "react";
 
 import { Table, Tooltip, Typography } from "@bigbinary/neetoui";
+import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
 
 import PostAction from "./PostAction";
@@ -11,7 +12,7 @@ import { formateDateTime } from "../utils";
 
 const PostsCurrentUser = () => {
   const { data: { data: { posts = [] } = {} } = {}, isLoading } = useMyPosts();
-  // const widths = useTableWidths();
+  const { t } = useTranslation();
   const columnData = [
     {
       dataIndex: "title",
@@ -32,7 +33,7 @@ const PostsCurrentUser = () => {
         </Tooltip>
       ),
       key: "title",
-      title: "TITLE",
+      title: t("post.table.title.title"),
       // width: widths.title,
     },
     {
@@ -45,7 +46,7 @@ const PostsCurrentUser = () => {
           {categories.map(c => c.name).join(", ")}
         </Typography>
       ),
-      title: "CATEGORY",
+      title: t("post.table.title.category"),
       // width: widths.category,
     },
     {
@@ -53,7 +54,7 @@ const PostsCurrentUser = () => {
       fixed: false,
       isHidable: false,
       key: "lastPublishedAt",
-      title: "LAST PUBLISHED AT",
+      title: t("post.table.title.lastPublishedAt"),
       render: lastPublishedAt => (
         <Typography className=" text-center">
           {formateDateTime(lastPublishedAt)}
@@ -66,7 +67,7 @@ const PostsCurrentUser = () => {
       fixed: false,
       isHidable: false,
       key: "status",
-      title: "STATUS",
+      title: t("post.table.title.status"),
       render: status => (
         <Typography className="text-center">
           {status.charAt(0).toUpperCase() + status.slice(1)}
@@ -82,7 +83,7 @@ const PostsCurrentUser = () => {
           <PostAction post={record} />
         </div>
       ),
-      title: "Action",
+      title: t("post.table.title.action"),
       // width: widths.action,
     },
   ];
@@ -97,7 +98,7 @@ const PostsCurrentUser = () => {
     return (
       <Container>
         <div className="w-full px-6">
-          <PageTitle title="My blog posts" />
+          <PageTitle title={t("post.secondTitle")} />
           <PageLoader />
         </div>
       </Container>
@@ -107,7 +108,7 @@ const PostsCurrentUser = () => {
   return (
     <Container>
       <div className="w-full px-6">
-        <PageTitle title="My blog posts" />
+        <PageTitle title={t("post.secondTitle")} />
         {/* <Typography className="mb-2" style="h4">
           Selected 15 of 55 users
         </Typography> */}

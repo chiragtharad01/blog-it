@@ -2,6 +2,7 @@ import React from "react";
 
 import { Form } from "@bigbinary/neetoui/formik";
 import Logger from "js-logger";
+import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 import { POST_FORM_VALIDATION_SCHEMA } from "./constants";
@@ -11,6 +12,7 @@ import { useCreatePost } from "../../hooks/reactQuery/usePostsApi";
 import { Container, PageTitle } from "../commons";
 
 const CreatePost = () => {
+  const { t } = useTranslation();
   const createPost = useCreatePost();
   const history = useHistory();
   const handleSubmit = async values => {
@@ -42,7 +44,10 @@ const CreatePost = () => {
       >
         {formikProps => (
           <div className="w-full px-6">
-            <PageTitle formikProps={formikProps} title="Create post" />
+            <PageTitle
+              formikProps={formikProps}
+              title={t("post.create.title")}
+            />
             <CreateForm />
           </div>
         )}

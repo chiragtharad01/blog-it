@@ -59,7 +59,7 @@ const ShowPost = () => {
           <div className="flex gap-4">
             <Avatar
               user={{
-                name: "neeto UI",
+                name: post.user.name,
               }}
             />
             <div>

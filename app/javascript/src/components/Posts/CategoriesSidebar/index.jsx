@@ -3,12 +3,14 @@ import React, { useEffect, useState } from "react";
 import { Plus, Search } from "@bigbinary/neeto-icons";
 import { Button, Input, Typography } from "@bigbinary/neetoui";
 import classNames from "classnames";
+import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 import { useCategories } from "../../../hooks/reactQuery/useCategoriesApi";
 import useDebounce from "../../../utils/useDebounce";
 
 const CategoriesSidebar = ({ setIsModalOpen }) => {
+  const { t } = useTranslation();
   const history = useHistory();
   const searchParams = new URLSearchParams(location.search);
   const [selectedCategories, setSelectedCategories] = useState(
@@ -50,7 +52,7 @@ const CategoriesSidebar = ({ setIsModalOpen }) => {
       <div className="mt-10 flex w-full flex-col items-center gap-6 px-4">
         <div className="w-full">
           <div className="mb-2 flex w-full items-center justify-between">
-            <Typography style="h5">CATEGORIES</Typography>
+            <Typography style="h5">{t("categories.title")}</Typography>
             <div className="flex gap-0">
               <Button
                 className="m-0 p-0"

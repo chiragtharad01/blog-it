@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { MenuHorizontal } from "@bigbinary/neeto-icons";
 import { Alert, Dropdown } from "@bigbinary/neetoui";
 import Logger from "js-logger";
+import { useTranslation } from "react-i18next";
 
 import {
   useDeletePost,
@@ -10,6 +11,7 @@ import {
 } from "../../hooks/reactQuery/usePostsApi";
 
 const PostAction = ({ post }) => {
+  const { t } = useTranslation();
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const updateStatus = useUpdatePostStatus();
   const deletePost = useDeletePost();
@@ -44,13 +46,13 @@ const PostAction = ({ post }) => {
             <Dropdown.MenuItem.Button
               onClick={() => handleUpdateStatus("publish")}
             >
-              Publish
+              {t("post.status.publish")}
             </Dropdown.MenuItem.Button>
           ) : (
             <Dropdown.MenuItem.Button
               onClick={() => handleUpdateStatus("draft")}
             >
-              Unpublish
+              {t("post.status.unpublish")}
             </Dropdown.MenuItem.Button>
           )}
           <Dropdown.Divider />
@@ -58,14 +60,14 @@ const PostAction = ({ post }) => {
             style="danger"
             onClick={() => setIsAlertOpen(true)}
           >
-            Delete
+            {t("post.status.delete")}
           </Dropdown.MenuItem.Button>
         </Dropdown.Menu>
       </Dropdown>
       <Alert
         isOpen={isAlertOpen}
-        message={`"${post.title}" will get permanently deleted. Proceed?`}
-        title={`Delete "${post.title}?"`}
+        message={t("post.delete.message", { title: post.title })}
+        title={t("post.delete.title", { title: post.title })}
         onClose={() => setIsAlertOpen(false)}
         onSubmit={() => {
           handleDelete();

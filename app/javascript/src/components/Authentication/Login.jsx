@@ -35,7 +35,6 @@ const Login = () => {
         handleSubmit={handleSubmit}
         loading={loginMutation.isLoading}
       />
-      ;
     </div>
   );
 };
