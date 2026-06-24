@@ -2,6 +2,7 @@
 
 Rails.application.routes.draw do
   constraints(lambda { |req| req.format == :json }) do
+    resources :my_posts, only: :index
     resources :posts, except: %i[new edit], param: :slug
     resources :users, only: %i[index create]
     resources :categories, only: %i[index create]

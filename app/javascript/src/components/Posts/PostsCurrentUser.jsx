@@ -5,12 +5,12 @@ import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
 
 import PostAction from "./PostAction";
 
-import { usePosts } from "../../hooks/reactQuery/usePostsApi";
+import { useMyPosts } from "../../hooks/reactQuery/useMyPostsApi";
 import { Container, PageLoader, PageTitle } from "../commons";
 import { formateDateTime } from "../utils";
 
 const PostsCurrentUser = () => {
-  const { data: { data: { posts = [] } = {} } = {}, isLoading } = usePosts();
+  const { data: { data: { posts = [] } = {} } = {}, isLoading } = useMyPosts();
   // const widths = useTableWidths();
   const columnData = [
     {
@@ -90,7 +90,7 @@ const PostsCurrentUser = () => {
   const rowData = posts.map(post => ({
     key: post.slug,
     category: post.categories,
-    lastPublishedAt: post.created_at,
+    lastPublishedAt: post.updated_at,
     ...post,
   }));
   if (isLoading) {

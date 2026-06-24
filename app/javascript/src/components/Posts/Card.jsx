@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
 
 import { formatDate } from "../utils";
 
-const Card = ({ slug, title, description, created_at, user, categories }) => (
+const Card = ({ slug, title, description, updated_at, user, categories }) => (
   <div className="flex w-full flex-col justify-center gap-2 border-b-2 border-gray-200 py-2">
     <NavLink to={`/posts/${slug}/show`}>
       <Typography className="text-black" style="h3" weight="semi-bold">
@@ -25,7 +25,7 @@ const Card = ({ slug, title, description, created_at, user, categories }) => (
             </Typography>
           ))}
       </div>
-      <div>
+      <div className="flex flex-col gap-1">
         <Typography style="h6">{user.name}</Typography>
         <Typography
           className="line-clamp-2 overflow-hidden text-ellipsis text-gray-900"
@@ -34,7 +34,7 @@ const Card = ({ slug, title, description, created_at, user, categories }) => (
           {description}
         </Typography>
         <Typography className="text-gray-600" style="body3">
-          {formatDate(created_at)}
+          {formatDate(updated_at)}
         </Typography>
       </div>
     </div>

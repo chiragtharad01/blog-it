@@ -49,9 +49,11 @@ const Posts = () => {
               setIsModalOpen={setIsModalOpen}
             />
           )}
-          {posts.map(post => (
-            <Card key={post.slug} {...post} />
-          ))}
+          <div className="flex w-full flex-col gap-3">
+            {posts.map(post => (
+              <Card key={post.slug} {...post} />
+            ))}
+          </div>
         </div>
       </div>
     </Container>

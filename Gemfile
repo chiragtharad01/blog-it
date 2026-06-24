@@ -67,4 +67,5 @@ end
 gem "bcrypt"
 gem "connection_pool", "~> 2.4"
 gem "data_migrate"
+gem "pundit"
 gem "react-rails", "~> 2.7.1"

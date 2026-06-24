@@ -1,8 +1,13 @@
 # frozen_string_literal: true
 
 class PostsController < ApplicationController
+  rescue_from Pundit::NotAuthorizedError, with: :handle_authorization_error
+  after_action :verify_authorized, except: :index
+  after_action :verify_policy_scoped, only: :index
   def index
-    @posts = Post.includes(:user, :categories).where(users: { organization_id: current_user.organization_id })
+    posts = policy_scope(Post)
+    # @posts = posts.includes(:user, :categories).where(users: { organization_id: current_user.organization_id })
+    @posts = posts.includes(:user, :categories)
     if params[:category_ids].present?
       categories = params[:category_ids].split(",")
       post_ids = @posts.joins(:categories).where(categories: { id: categories }).pluck(:id)
@@ -12,6 +17,7 @@ class PostsController < ApplicationController
 
   def create
     post = Post.new(post_params)
+    authorize post
     post.user_id = @current_user.id
     post.organization_id = 1
     post.save!
@@ -20,16 +26,19 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find_by!(slug: params[:slug])
+    authorize @post
   end
 
   def update
     post = Post.find_by!(slug: params[:slug])
+    authorize post
     post.update!(post_params)
     render_notice(t("successfully_updated", entity: "Post")) unless params.key?(:quite)
   end
 
   def destroy
     post = Post.find_by!(slug: params[:slug])
+    authorize post
     post.destroy!
     render_notice(t("successfully_deleted", entity: "Post"))
   end
@@ -38,5 +47,9 @@ class PostsController < ApplicationController
 
     def post_params
       params.require(:post).permit(:title, :description, :status, category_ids: [])
+    end
+
+    def handle_authorization_error
+      render_error(t("authorization.denied"), :forbidden)
     end
 end

@@ -23,6 +23,7 @@ export const useCreatePost = () => {
   return useMutation(payload => postsApi.create(payload), {
     onSuccess: () => {
       queryClient.invalidateQueries(QUERY_KEYS.POSTS);
+      queryClient.invalidateQueries(QUERY_KEYS.MYPOSTS);
     },
   });
 };
@@ -34,7 +35,9 @@ export const useEditPost = () => {
     ({ slug, payload }) => postsApi.update({ slug, payload }),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(QUERY_KEYS.POST, QUERY_KEYS.POSTS);
+        queryClient.invalidateQueries(QUERY_KEYS.POST);
+        queryClient.invalidateQueries(QUERY_KEYS.POSTS);
+        queryClient.invalidateQueries(QUERY_KEYS.MYPOSTS);
       },
     }
   );
@@ -46,6 +49,7 @@ export const useDeletePost = () => {
   return useMutation(slug => postsApi.destroy(slug), {
     onSuccess: () => {
       queryClient.invalidateQueries(QUERY_KEYS.POSTS);
+      queryClient.invalidateQueries(QUERY_KEYS.MYPOSTS);
     },
   });
 };
@@ -57,7 +61,9 @@ export const useUpdatePostStatus = () => {
     ({ slug, status }) => postsApi.updateStatus(slug, status),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(QUERY_KEYS.POSTS, QUERY_KEYS.POST);
+        queryClient.invalidateQueries(QUERY_KEYS.POST);
+        queryClient.invalidateQueries(QUERY_KEYS.POSTS);
+        queryClient.invalidateQueries(QUERY_KEYS.MYPOSTS);
       },
     }
   );
