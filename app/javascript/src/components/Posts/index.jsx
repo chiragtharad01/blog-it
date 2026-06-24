@@ -3,9 +3,9 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
-import Card from "./Card";
 import CategoriesSidebar from "./CategoriesSidebar";
 import CreateCategoryModal from "./CreateCategoryModal";
+import PostContainer from "./PostContainer";
 
 import { usePosts } from "../../hooks/reactQuery/usePostsApi";
 import { PageTitle, Container, PageLoader } from "../commons";
@@ -23,8 +23,10 @@ const Posts = () => {
   if (isLoading) {
     return (
       <Container>
-        <PageTitle title={t("post.homeTitle")} />
-        <PageLoader />
+        <div className="w-full px-6">
+          <PageTitle title={t("post.homeTitle")} />
+          <PageLoader />
+        </div>
       </Container>
     );
   }
@@ -50,9 +52,7 @@ const Posts = () => {
             />
           )}
           <div className="flex w-full flex-col gap-3">
-            {posts.map(post => (
-              <Card key={post.slug} {...post} />
-            ))}
+            <PostContainer posts={posts} />
           </div>
         </div>
       </div>

@@ -23,6 +23,7 @@
         "action": "action"
       }
     },
+    "noPostsTitle": "No posts yet...",
     "homeTitle": "Blog posts",
     "homeButton": "Add new blog post",
     "secondTitle": "My blog posts",
@@ -49,6 +50,7 @@
     }
   },
   "categories": {
+    "noCategories": "No categories",
     "title": "CATEGORIES",
     "modal": {
       "title": "New category",

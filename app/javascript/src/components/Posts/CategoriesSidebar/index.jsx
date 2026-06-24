@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 
 import { Plus, Search } from "@bigbinary/neeto-icons";
 import { Button, Input, Typography } from "@bigbinary/neetoui";
-import classNames from "classnames";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+
+import CategoriesContainer from "./CategoriesContainer";
 
 import { useCategories } from "../../../hooks/reactQuery/useCategoriesApi";
 import useDebounce from "../../../utils/useDebounce";
@@ -21,7 +22,7 @@ const CategoriesSidebar = ({ setIsModalOpen }) => {
   const [searchInput, setSearchInput] = useState("");
   const [showSearch, setShowSearch] = useState(false);
   const debouncedSearchInput = useDebounce(searchInput);
-  const { data: { data: { categories = [] } = {} } = {} } =
+  const { data: { data: { categories = [] } = {} } = {}, isLoading } =
     useCategories(debouncedSearchInput);
 
   const handleCategoryClick = categoryId => {
@@ -72,20 +73,12 @@ const CategoriesSidebar = ({ setIsModalOpen }) => {
           {showSearch && <Input onChange={handleChange} />}
         </div>
         <div className="flex w-full flex-col gap-3">
-          {categories?.map(category => (
-            <div
-              key={category.id}
-              className={classNames(
-                "neeto-ui-rounded border border-gray-300 px-2 py-1 shadow",
-                {
-                  "bg-white": selectedCategories.includes(category.id),
-                }
-              )}
-              onClick={() => handleCategoryClick(category.id)}
-            >
-              <Typography style="body1">{category.name}</Typography>
-            </div>
-          ))}
+          <CategoriesContainer
+            categories={categories}
+            handleCategoryClick={handleCategoryClick}
+            isLoading={isLoading}
+            selectedCategories={selectedCategories}
+          />
         </div>
       </div>
     </div>
