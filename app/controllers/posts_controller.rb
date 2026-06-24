@@ -8,9 +8,9 @@ class PostsController < ApplicationController
     posts = policy_scope(Post)
     # @posts = posts.includes(:user, :categories).where(users: { organization_id: current_user.organization_id })
     @posts = posts.includes(:user, :categories)
-    if params[:category_ids].present?
-      categories = params[:category_ids].split(",")
-      post_ids = @posts.joins(:categories).where(categories: { id: categories }).pluck(:id)
+    if params[:categories].present?
+      categories = params[:categories].split(",")
+      post_ids = @posts.joins(:categories).where(categories: { slug: categories }).pluck(:id)
       @posts = @posts.where(id: post_ids)
     end
   end

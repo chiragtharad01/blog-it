@@ -5,6 +5,7 @@ import LoginForm from "components/Authentication/Form/Login";
 import Logger from "js-logger";
 
 import { useLogin } from "../../hooks/reactQuery/useAuthApi";
+import routes from "../../routes";
 import useAuthStore from "../../stores/authStore";
 
 const Login = () => {
@@ -22,7 +23,7 @@ const Login = () => {
       };
       login(loginData);
       setAuthHeaders();
-      window.location.href = "/";
+      window.location.href = routes.dashboard;
     } catch (error) {
       Logger.error(error);
     }

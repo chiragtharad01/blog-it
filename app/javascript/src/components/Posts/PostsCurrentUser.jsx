@@ -7,6 +7,7 @@ import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
 import PostAction from "./PostAction";
 
 import { useMyPosts } from "../../hooks/reactQuery/useMyPostsApi";
+import routes from "../../routes";
 import { Container, PageLoader, PageTitle } from "../commons";
 import { formateDateTime } from "../utils";
 
@@ -21,7 +22,7 @@ const PostsCurrentUser = () => {
       render: (_, record) => (
         <Tooltip content={record.title} position="right">
           <div className="xs:w-36  flex items-center  sm:w-64 md:w-80 lg:w-96">
-            <NavLink to={`/posts/${record.slug}/edit`}>
+            <NavLink to={routes.posts.edit(record.slug)}>
               <Typography
                 className="overflow-hidden truncate text-ellipsis text-green-600 "
                 style="body2"

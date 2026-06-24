@@ -2,8 +2,10 @@ import React from "react";
 
 import { Typography } from "@bigbinary/neetoui";
 import { Button, Form, Input } from "@bigbinary/neetoui/formik";
+import { Trans } from "react-i18next";
 import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
 
+import routes from "../../../routes";
 import withT from "../../../utils/withT";
 import { SIGNUP_FORM_VALIDATION_SCHEMA } from "../constants";
 
@@ -25,11 +27,15 @@ const SignupForm = ({ handleSubmit, t }) => (
         <Typography className="text-3xl" style="h4" weight="bold">
           {t("signupTitle")}
         </Typography>
-        <NavLink to="/login">
-          <Typography className="w-full text-blue-400" style="body2">
-            {t("yesAccount")}
-          </Typography>
-        </NavLink>
+        <Typography className="w-full text-center" style="body2">
+          {/* {t("yesAccount")} */}
+          <Trans
+            i18nKey="yesAccount"
+            components={{
+              login: <NavLink className="text-blue-400" to={routes.login} />,
+            }}
+          />
+        </Typography>
       </div>
       <div className="flex w-full flex-col gap-6">
         <Input required label="Name" name="name" placeholder="Enter name" />
@@ -51,7 +57,7 @@ const SignupForm = ({ handleSubmit, t }) => (
         <Input
           required
           label={t("form.confirmPassword")}
-          name="password"
+          name="password_confirmation"
           placeholder={t("form.confirmPasswordPlaceholder")}
           size="large"
           type="password"

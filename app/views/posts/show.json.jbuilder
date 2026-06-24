@@ -17,6 +17,7 @@ json.post do
   json.categories @post.categories do |category|
     json.extract! category,
       :id,
-      :name
+      :name,
+      :slug
   end
 end

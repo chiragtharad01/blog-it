@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import SignupForm from "./Form/Signup";
 
 import { useSignup } from "../../hooks/reactQuery/useAuthApi";
+import routes from "../../routes";
 
 const Signup = () => {
   const history = useHistory();
@@ -13,7 +14,7 @@ const Signup = () => {
   const handleSubmit = async values => {
     try {
       await signupMutation.mutateAsync(values);
-      history.push("/dashboard");
+      history.push(routes.login);
     } catch (error) {
       Logger.error(error);
     }

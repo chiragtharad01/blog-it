@@ -3,11 +3,12 @@ import React from "react";
 import { Typography } from "@bigbinary/neetoui";
 import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
 
+import routes from "../../routes";
 import { formatDate } from "../utils";
 
 const Card = ({ slug, title, description, updated_at, user, categories }) => (
   <div className="flex w-full flex-col justify-center gap-2 border-b-2 border-gray-200 py-2">
-    <NavLink to={`/posts/${slug}/show`}>
+    <NavLink to={routes.posts.show(slug)}>
       <Typography className="text-black" style="h3" weight="semi-bold">
         {title}
       </Typography>
@@ -18,7 +19,7 @@ const Card = ({ slug, title, description, updated_at, user, categories }) => (
           categories?.map(category => (
             <Typography
               className="neeto-ui-rounded-full min-w-min bg-green-100 px-3 py-1"
-              key={category.id}
+              key={category.slug}
               style="nano"
             >
               {category.name}

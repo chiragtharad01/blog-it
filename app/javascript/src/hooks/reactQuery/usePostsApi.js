@@ -2,20 +2,32 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 
 import postsApi from "../../apis/posts";
 import QUERY_KEYS from "../../constants/queryKeys";
+import routes from "../../routes";
 
-export const usePosts = categoryIds =>
+export const usePosts = categories =>
   useQuery(
-    [QUERY_KEYS.POSTS, categoryIds],
-    () => postsApi.fetch({ category_ids: categoryIds }),
+    [QUERY_KEYS.POSTS, categories],
+    () => postsApi.fetch({ categories }),
     {
       keepPreviousData: true,
     }
   );
 
 export const usePost = slug =>
-  useQuery([QUERY_KEYS.POST, slug], () => postsApi.show(slug), {
-    keepPreviousData: !!slug,
-  });
+  useQuery(
+    [QUERY_KEYS.POST, slug],
+    () => postsApi.show(slug),
+    {
+      onError: error => {
+        if (error.response?.status === 404) {
+          window.location.href = routes.dashboard;
+        }
+      },
+    },
+    {
+      keepPreviousData: !!slug,
+    }
+  );
 
 export const useCreatePost = () => {
   const queryClient = useQueryClient();

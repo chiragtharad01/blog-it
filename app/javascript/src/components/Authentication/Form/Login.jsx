@@ -2,8 +2,10 @@ import React from "react";
 
 import { Typography } from "@bigbinary/neetoui";
 import { Button, Form, Input } from "@bigbinary/neetoui/formik";
+import { Trans } from "react-i18next";
 import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
 
+import routes from "../../../routes";
 import withT from "../../../utils/withT";
 import { LOGIN_FORM_VALIDATION_SCHEMA } from "../constants";
 
@@ -23,11 +25,14 @@ const LoginForm = ({ handleSubmit, t }) => (
         <Typography className="text-3xl" style="h4" weight="bold">
           {t("loginTitle")}
         </Typography>
-        <NavLink to="/signup">
-          <Typography className="w-full text-blue-400" style="body2">
-            {t("noAccount")}
-          </Typography>
-        </NavLink>
+        <Typography className="w-full text-center" style="body2">
+          <Trans
+            i18nKey="noAccount"
+            components={{
+              signup: <NavLink className="text-blue-400" to={routes.signup} />,
+            }}
+          />
+        </Typography>
       </div>
       <div className="flex w-full flex-col gap-6">
         <Input

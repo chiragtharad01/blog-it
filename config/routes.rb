@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     resources :my_posts, only: :index
     resources :posts, except: %i[new edit], param: :slug
     resources :users, only: %i[index create]
-    resources :categories, only: %i[index create]
+    resources :categories, only: %i[index create], param: :slug
     resource :session, only: %i[create destroy]
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

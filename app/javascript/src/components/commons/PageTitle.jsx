@@ -1,20 +1,22 @@
 import React, { useState } from "react";
 
-import { Delete } from "@bigbinary/neeto-icons";
+import { Delete, UpArrow } from "@bigbinary/neeto-icons";
 import { ActionDropdown, Alert, Button, Typography } from "@bigbinary/neetoui";
 import Logger from "js-logger";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 import { useDeletePost } from "../../hooks/reactQuery/usePostsApi";
+import routes from "../../routes";
 
 const PageTitle = ({
   title,
   button,
   redirectTo,
   shouldShowButton,
+  shouldShowPreviewButton,
   formikProps,
-  editTaskSlug,
+  editPostSlug,
 }) => {
   const { t } = useTranslation();
   const [isAlertOpen, setIsAlertOpen] = useState(false);
@@ -22,8 +24,8 @@ const PageTitle = ({
   const deletePost = useDeletePost();
   const handleDelete = async () => {
     try {
-      await deletePost.mutateAsync(editTaskSlug);
-      history.push("/dashboard");
+      await deletePost.mutateAsync(editPostSlug);
+      history.push(routes.dashboard);
     } catch (error) {
       Logger.error(error);
     }
@@ -44,11 +46,20 @@ const PageTitle = ({
       )}
       {formikProps && (
         <div className="flex h-min w-full justify-end gap-2">
+          {shouldShowPreviewButton && (
+            <Button
+              className="rotate-45 text-black"
+              icon={UpArrow}
+              iconSize={16}
+              style="link"
+              to={routes.posts.show(editPostSlug)}
+            />
+          )}
           <Button
             className="w-20"
             label={t("post.status.cancel")}
             style="tertiary"
-            to="/dashboard"
+            to={routes.dashboard}
             type="cancel"
           />
           <ActionDropdown
@@ -85,7 +96,7 @@ const PageTitle = ({
               >
                 {t("post.status.publish")}
               </ActionDropdown.MenuItem.Button>
-              {editTaskSlug && (
+              {editPostSlug && (
                 <>
                   <ActionDropdown.Divider />
                   <ActionDropdown.MenuItem.Button

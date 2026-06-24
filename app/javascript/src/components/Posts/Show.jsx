@@ -5,13 +5,20 @@ import { Avatar, Button, Typography } from "@bigbinary/neetoui";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
 import { usePost } from "../../hooks/reactQuery/usePostsApi";
+import routes from "../../routes";
 import { Container, PageLoader } from "../commons";
 import { formatDate } from "../utils";
 
 const ShowPost = () => {
   const { slug } = useParams();
+  // const history = useHistory();
   const { data: { data: { post = {} } = {} } = {}, isLoading } = usePost(slug);
   const showTag = post.status === "draft";
+  // if (isError) {
+  //   console.log("here");
+  //   history.push(routes.dashboard);
+  // }
+
   if (isLoading) {
     return (
       <Container>
@@ -27,7 +34,7 @@ const ShowPost = () => {
           {post.categories?.map(category => (
             <Typography
               className="neeto-ui-rounded-full min-w-min bg-green-100 px-3 py-1"
-              key={category.id}
+              key={category.slug}
               style="nano"
             >
               {category.name}
@@ -53,7 +60,7 @@ const ShowPost = () => {
               className="text-black"
               icon={Edit}
               style="link"
-              to={`/posts/${slug}/edit`}
+              to={routes.posts.edit(slug)}
             />
           </div>
           <div className="flex gap-4">

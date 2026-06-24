@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 
-import { File, LeftArrow, List, Templates } from "@bigbinary/neeto-icons";
+import { Edit, File, Folder, LeftArrow, List } from "@bigbinary/neeto-icons";
 import { Avatar, Button, Popover, Typography } from "@bigbinary/neetoui";
 import Logger from "js-logger";
 import { useTranslation } from "react-i18next";
@@ -8,6 +8,7 @@ import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
 import { resetAuthTokens } from "../../apis/axios";
 import { useLogout } from "../../hooks/reactQuery/useAuthApi";
+import routes from "../../routes";
 import useAuthStore from "../../stores/authStore";
 import { getButtonProps } from "../utils";
 
@@ -15,6 +16,8 @@ const NavBar = ({ setIsSidebarOpen, isSidebarOpen }) => {
   const { t } = useTranslation();
   const location = useLocation();
   const isActive = path => location.pathname === path;
+  const addEditPostButton =
+    isActive(routes.posts.create) || location.pathname.includes("edit");
   const userName = useAuthStore(state => state.authUserName);
   const email = useAuthStore(state => state.authEmail);
   const logout = useAuthStore(state => state.logout);
@@ -25,7 +28,7 @@ const NavBar = ({ setIsSidebarOpen, isSidebarOpen }) => {
       await logoutMutation.mutateAsync();
       logout();
       resetAuthTokens();
-      window.location.href = "/";
+      window.location.href = routes.login;
     } catch (error) {
       Logger.error(error);
     }
@@ -38,20 +41,27 @@ const NavBar = ({ setIsSidebarOpen, isSidebarOpen }) => {
           <Button
             icon={File}
             iconSize={16}
-            to="/dashboard"
-            {...getButtonProps(isActive("/dashboard"))}
+            to={routes.dashboard}
+            {...getButtonProps(isActive(routes.dashboard))}
           />
           <Button
+            disabled={!isActive(routes.dashboard)}
             icon={List}
             iconSize={16}
             {...getButtonProps(isSidebarOpen)}
             onClick={() => setIsSidebarOpen(prev => !prev)}
           />
           <Button
-            icon={Templates}
+            disabled={!addEditPostButton}
+            icon={Edit}
             iconSize={16}
-            {...getButtonProps(isActive("/posts/myposts"))}
-            to="/posts/myposts"
+            {...getButtonProps(addEditPostButton)}
+          />
+          <Button
+            icon={Folder}
+            iconSize={16}
+            {...getButtonProps(isActive(routes.posts.myPosts))}
+            to={routes.posts.myPosts}
           />
         </div>
         <div>

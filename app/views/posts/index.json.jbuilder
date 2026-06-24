@@ -6,17 +6,16 @@ json.posts @posts do |post|
     :title,
     :slug,
     :updated_at,
-    :description,
-    :status
+    :description
   json.user do
     json.extract! post.user,
       :id,
-      :email,
       :name
   end
   json.categories post.categories do |category|
     json.extract! category,
       :id,
-      :name
+      :name,
+      :slug
   end
 end

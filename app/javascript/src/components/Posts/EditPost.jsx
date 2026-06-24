@@ -12,6 +12,7 @@ import { POST_FORM_VALIDATION_SCHEMA } from "./constants";
 import EditForm from "./EditForm";
 
 import { useEditPost, usePost } from "../../hooks/reactQuery/usePostsApi";
+import routes from "../../routes";
 import { Container, PageLoader, PageTitle } from "../commons";
 
 const EditPost = () => {
@@ -39,7 +40,7 @@ const EditPost = () => {
         category_ids: values.category_ids.map(category => category.value),
       };
       await updatePost.mutateAsync({ slug, payload });
-      history.push(`/posts/${slug}/show`);
+      history.push(routes.posts.show(slug));
     } catch (error) {
       Logger.error(error);
     }
@@ -69,7 +70,8 @@ const EditPost = () => {
         {formikProps => (
           <div className="w-full px-6">
             <PageTitle
-              editTaskSlug={slug}
+              shouldShowPreviewButton
+              editPostSlug={slug}
               formikProps={formikProps}
               title={t("post.create.editTitle")}
             />

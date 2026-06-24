@@ -26,14 +26,14 @@ const CategoriesContainer = ({
     <>
       {categories?.map(category => (
         <div
-          key={category.id}
+          key={category.slug}
           className={classNames(
             "neeto-ui-rounded border border-gray-300 px-2 py-1 shadow",
             {
-              "bg-white": selectedCategories.includes(category.id),
+              "bg-white": selectedCategories.includes(category.slug),
             }
           )}
-          onClick={() => handleCategoryClick(category.id)}
+          onClick={() => handleCategoryClick(category.slug)}
         >
           <Typography style="body1">{category.name}</Typography>
         </div>

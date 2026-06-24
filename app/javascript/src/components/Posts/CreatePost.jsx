@@ -9,6 +9,7 @@ import { POST_FORM_VALIDATION_SCHEMA } from "./constants";
 import CreateForm from "./CreateForm";
 
 import { useCreatePost } from "../../hooks/reactQuery/usePostsApi";
+import routes from "../../routes";
 import { Container, PageTitle } from "../commons";
 
 const CreatePost = () => {
@@ -22,7 +23,7 @@ const CreatePost = () => {
         category_ids: values.category_ids.map(category => category.value),
       };
       await createPost.mutateAsync(payload);
-      history.push("/dashboard");
+      history.push(routes.dashboard);
     } catch (error) {
       Logger.error(error);
     }

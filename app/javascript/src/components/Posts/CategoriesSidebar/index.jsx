@@ -8,6 +8,7 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import CategoriesContainer from "./CategoriesContainer";
 
 import { useCategories } from "../../../hooks/reactQuery/useCategoriesApi";
+import routes from "../../../routes";
 import useDebounce from "../../../utils/useDebounce";
 
 const CategoriesSidebar = ({ setIsModalOpen }) => {
@@ -15,8 +16,8 @@ const CategoriesSidebar = ({ setIsModalOpen }) => {
   const history = useHistory();
   const searchParams = new URLSearchParams(location.search);
   const [selectedCategories, setSelectedCategories] = useState(
-    searchParams.get("category_ids")
-      ? searchParams.get("category_ids").split(",").map(Number)
+    searchParams.get("categories")
+      ? searchParams.get("categories").split(",")
       : []
   );
   const [searchInput, setSearchInput] = useState("");
@@ -25,11 +26,11 @@ const CategoriesSidebar = ({ setIsModalOpen }) => {
   const { data: { data: { categories = [] } = {} } = {}, isLoading } =
     useCategories(debouncedSearchInput);
 
-  const handleCategoryClick = categoryId => {
+  const handleCategoryClick = categorySlug => {
     setSelectedCategories(previousCategories =>
-      previousCategories.includes(categoryId)
-        ? previousCategories.filter(id => id !== categoryId)
-        : [...previousCategories, categoryId]
+      previousCategories.includes(categorySlug)
+        ? previousCategories.filter(slug => slug !== categorySlug)
+        : [...previousCategories, categorySlug]
     );
   };
 
@@ -40,11 +41,11 @@ const CategoriesSidebar = ({ setIsModalOpen }) => {
   useEffect(() => {
     if (selectedCategories.length > 0) {
       history.push({
-        pathname: "/dashboard",
-        search: `?category_ids=${selectedCategories?.join(",")}`,
+        pathname: routes.dashboard,
+        search: `?categories=${selectedCategories?.join(",")}`,
       });
     } else {
-      history.push("/dashboard");
+      history.push(routes.dashboard);
     }
   }, [selectedCategories, history]);
 

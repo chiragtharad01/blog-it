@@ -1,6 +1,10 @@
 {
-  "noAccount": "Don't have an account? Click here...",
-  "yesAccount": "Already have an account? Click here...",
+  "pageNotFound": {
+    "button": "Back to home",
+    "title": "Page not found"
+  },
+  "noAccount": "No account? <signup>Signup</signup>",
+  "yesAccount": "Already have an account? <login>Login<login>",
   "loginTitle": "Login",
   "signupTitle": "Signup",
   "logout": "Logout",
@@ -62,7 +66,9 @@
   "validation": {
     "post": {
       "title": "Title is required",
-      "description": "Description is required"
+      "description": "Description is required",
+      "minCategory": "At least one category is required",
+      "category": "Category is required"
     },
     "category": {
       "name": "Category name is required"

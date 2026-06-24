@@ -8,6 +8,7 @@ import CreateCategoryModal from "./CreateCategoryModal";
 import PostContainer from "./PostContainer";
 
 import { usePosts } from "../../hooks/reactQuery/usePostsApi";
+import routes from "../../routes";
 import { PageTitle, Container, PageLoader } from "../commons";
 
 const Posts = () => {
@@ -16,8 +17,8 @@ const Posts = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const searchParams = new URLSearchParams(location.search);
-  const categoryIds = searchParams.get("category_ids");
-  const response = usePosts(categoryIds);
+  const categories = searchParams.get("categories");
+  const response = usePosts(categories);
   const { data: { data: { posts = [] } = {} } = {}, isLoading } = response;
 
   if (isLoading) {
@@ -42,7 +43,7 @@ const Posts = () => {
           <PageTitle
             shouldShowButton
             button={t("post.homeButton")}
-            redirectTo="/posts/create"
+            redirectTo={routes.posts.create}
             title={t("post.homeTitle")}
           />
           {isModalOpen && (
