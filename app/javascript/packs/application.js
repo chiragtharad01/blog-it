@@ -1,5 +1,6 @@
 import "../stylesheets/application.scss";
 import ReactRailsUJS from "react_ujs";
+import "../src/common/i18n";
 import App from "../src/App";
 import "../../../node_modules/@bigbinary/neetoui/dist/index.css";
 import "../../../node_modules/react-toastify/dist/ReactToastify.min.css";
