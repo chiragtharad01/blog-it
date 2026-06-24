@@ -12,7 +12,7 @@ class PostsController < ApplicationController
 
   def create
     post = Post.new(post_params)
-    post.user_id = 2
+    post.user_id = @current_user.id
     post.organization_id = 1
     post.save!
     render_notice(t("successfully_created", entity: "Post"))

@@ -6,13 +6,12 @@ import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
 import PostAction from "./PostAction";
 
 import { usePosts } from "../../hooks/reactQuery/usePostsApi";
-import { useTableWidths } from "../../hooks/tableWidth";
 import { Container, PageLoader, PageTitle } from "../commons";
 import { formateDateTime } from "../utils";
 
 const PostsCurrentUser = () => {
   const { data: { data: { posts = [] } = {} } = {}, isLoading } = usePosts();
-  const widths = useTableWidths();
+  // const widths = useTableWidths();
   const columnData = [
     {
       dataIndex: "title",
@@ -20,10 +19,10 @@ const PostsCurrentUser = () => {
       isHidable: false,
       render: (_, record) => (
         <Tooltip content={record.title} position="right">
-          <div className="flex items-center">
+          <div className="xs:w-36  flex items-center  sm:w-64 md:w-80 lg:w-96">
             <NavLink to={`/posts/${record.slug}/edit`}>
               <Typography
-                className="overflow-hidden truncate text-ellipsis text-green-600"
+                className="overflow-hidden truncate text-ellipsis text-green-600 "
                 style="body2"
               >
                 {record.title}
@@ -34,7 +33,7 @@ const PostsCurrentUser = () => {
       ),
       key: "title",
       title: "TITLE",
-      width: widths.title,
+      // width: widths.title,
     },
     {
       dataIndex: "category",
@@ -42,12 +41,12 @@ const PostsCurrentUser = () => {
       isHidable: false,
       key: "category",
       render: categories => (
-        <Typography className="">
+        <Typography className="w-48">
           {categories.map(c => c.name).join(", ")}
         </Typography>
       ),
       title: "CATEGORY",
-      width: widths.category,
+      // width: widths.category,
     },
     {
       dataIndex: "lastPublishedAt",
@@ -60,7 +59,7 @@ const PostsCurrentUser = () => {
           {formateDateTime(lastPublishedAt)}
         </Typography>
       ),
-      width: widths.publishedAt,
+      // width: widths.publishedAt,
     },
     {
       dataIndex: "status",
@@ -69,22 +68,22 @@ const PostsCurrentUser = () => {
       key: "status",
       title: "STATUS",
       render: status => (
-        <Typography className=" text-center">
+        <Typography className="text-center">
           {status.charAt(0).toUpperCase() + status.slice(1)}
         </Typography>
       ),
-      width: widths.status,
+      // width: widths.status,
     },
     {
       dataIndex: "action",
       key: "action",
       render: (_, record) => (
-        <div className="flex items-center justify-center pr-2">
+        <div className="flex max-w-24 items-center justify-center pr-2">
           <PostAction post={record} />
         </div>
       ),
       title: "Action",
-      width: widths.action,
+      // width: widths.action,
     },
   ];
 
@@ -115,14 +114,14 @@ const PostsCurrentUser = () => {
         <div className="w-full">
           <Table
             rowSelection
-            className="w-full"
+            className="max-w-screen w-min"
             columnData={columnData}
             currentPageNumber={1}
             defaultPageSize={rowData?.length}
             handlePageChange={() => {}}
             rowData={rowData}
             // selectedRowKeys={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]}
-            totalCount={rowData?.length}
+            // totalCount={rowData?.length}
             // bulkSelectAllRowsProps={{
             //   selectAllRowButtonLabel: "Select all 55 users",
             //   selectAllRowMessage: "All 15 users on this page are selected",
