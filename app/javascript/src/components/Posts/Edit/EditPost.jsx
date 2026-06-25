@@ -1,5 +1,6 @@
 import React from "react";
 
+import { Toastr } from "@bigbinary/neetoui";
 import { Form } from "@bigbinary/neetoui/formik";
 import Logger from "js-logger";
 import { useTranslation } from "react-i18next";
@@ -8,17 +9,24 @@ import {
   useParams,
 } from "react-router-dom/cjs/react-router-dom.min";
 
-import { POST_FORM_VALIDATION_SCHEMA } from "./constants";
 import EditForm from "./EditForm";
 
-import { useEditPost, usePost } from "../../hooks/reactQuery/usePostsApi";
-import routes from "../../routes";
-import { Container, PageLoader, PageTitle } from "../commons";
+import { useEditPost, usePost } from "../../../hooks/reactQuery/usePostsApi";
+import routes from "../../../routes";
+import useAuthStore from "../../../stores/authStore";
+import { Container, PageLoader, PageTitle } from "../../commons";
+import { POST_FORM_VALIDATION_SCHEMA } from "../constants";
 
 const EditPost = () => {
+  const history = useHistory();
+  const currentUser = useAuthStore(store => store.authUserId);
   const { t } = useTranslation();
   const { slug } = useParams();
   const { data: { data: { post = {} } = {} } = {}, isLoading } = usePost(slug);
+  if (!isLoading && post?.user?.id !== currentUser) {
+    Toastr.error(t("userNotAuthenticatedError"), { autoClose: 2000 });
+    history.push(routes.posts.show(slug));
+  }
 
   const {
     title = "",
@@ -31,7 +39,6 @@ const EditPost = () => {
     value: category.id,
     label: category.name,
   }));
-  const history = useHistory();
   const updatePost = useEditPost();
   const handleSubmit = async values => {
     try {

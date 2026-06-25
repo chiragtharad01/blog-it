@@ -5,12 +5,12 @@ import Logger from "js-logger";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
-import { POST_FORM_VALIDATION_SCHEMA } from "./constants";
 import CreateForm from "./CreateForm";
 
-import { useCreatePost } from "../../hooks/reactQuery/usePostsApi";
-import routes from "../../routes";
-import { Container, PageTitle } from "../commons";
+import { useCreatePost } from "../../../hooks/reactQuery/usePostsApi";
+import routes from "../../../routes";
+import { Container, PageTitle } from "../../commons";
+import { POST_FORM_VALIDATION_SCHEMA } from "../constants";
 
 const CreatePost = () => {
   const { t } = useTranslation();

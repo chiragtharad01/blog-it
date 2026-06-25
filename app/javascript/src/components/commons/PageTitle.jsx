@@ -22,6 +22,11 @@ const PageTitle = ({
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const history = useHistory();
   const deletePost = useDeletePost();
+  const actionDropdownLabel =
+    formikProps?.values.status === "draft"
+      ? t("post.status.saveAsDraft")
+      : t("post.status.publish");
+
   const handleDelete = async () => {
     try {
       await deletePost.mutateAsync(editPostSlug);
@@ -64,6 +69,7 @@ const PageTitle = ({
           />
           <ActionDropdown
             buttonStyle="primary"
+            label={actionDropdownLabel}
             buttonProps={{
               className: "neetix-button--primary min-w-min",
             }}
@@ -72,11 +78,6 @@ const PageTitle = ({
                 className: "neetix-button--primary",
               },
             }}
-            label={
-              formikProps.values.status === "draft"
-                ? t("post.status.saveAsDraft")
-                : t("post.status.publish")
-            }
             onClick={() => {
               formikProps.submitForm();
             }}

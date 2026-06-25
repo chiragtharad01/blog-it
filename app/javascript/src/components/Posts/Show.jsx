@@ -11,13 +11,8 @@ import { formatDate } from "../utils";
 
 const ShowPost = () => {
   const { slug } = useParams();
-  // const history = useHistory();
   const { data: { data: { post = {} } = {} } = {}, isLoading } = usePost(slug);
   const showTag = post.status === "draft";
-  // if (isError) {
-  //   console.log("here");
-  //   history.push(routes.dashboard);
-  // }
 
   if (isLoading) {
     return (

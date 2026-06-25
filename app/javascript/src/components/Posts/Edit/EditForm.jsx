@@ -3,7 +3,7 @@ import React from "react";
 import { Input, Select } from "@bigbinary/neetoui/formik";
 import { useTranslation } from "react-i18next";
 
-import { useCategories } from "../../hooks/reactQuery/useCategoriesApi";
+import { useCategories } from "../../../hooks/reactQuery/useCategoriesApi";
 
 const EditForm = () => {
   const { t } = useTranslation();

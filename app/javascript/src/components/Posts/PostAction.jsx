@@ -15,6 +15,12 @@ const PostAction = ({ post }) => {
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const updateStatus = useUpdatePostStatus();
   const deletePost = useDeletePost();
+  const actionStatus = post.status === "draft" ? "publish" : "draft";
+  const actionLabel =
+    post.status === "draft"
+      ? t("post.status.publish")
+      : t("post.status.unpublish");
+
   const handleUpdateStatus = async status => {
     try {
       await updateStatus.mutateAsync({ slug: post.slug, status });
@@ -42,19 +48,11 @@ const PostAction = ({ post }) => {
         }}
       >
         <Dropdown.Menu>
-          {post.status === "draft" ? (
-            <Dropdown.MenuItem.Button
-              onClick={() => handleUpdateStatus("publish")}
-            >
-              {t("post.status.publish")}
-            </Dropdown.MenuItem.Button>
-          ) : (
-            <Dropdown.MenuItem.Button
-              onClick={() => handleUpdateStatus("draft")}
-            >
-              {t("post.status.unpublish")}
-            </Dropdown.MenuItem.Button>
-          )}
+          <Dropdown.MenuItem.Button
+            onClick={() => handleUpdateStatus(actionStatus)}
+          >
+            {actionLabel}
+          </Dropdown.MenuItem.Button>
           <Dropdown.Divider />
           <Dropdown.MenuItem.Button
             style="danger"

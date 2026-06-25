@@ -73,8 +73,8 @@ const NavBar = ({ setIsSidebarOpen, isSidebarOpen }) => {
             />
           </Button>
           <Popover reference={buttonRef}>
-            <div className="w-40">
-              <div className="flex gap-4 border-b border-gray-200 pb-2">
+            <div className="flex h-min w-40 flex-col justify-between pb-0">
+              <div className="mb-2 flex gap-4 border-b border-gray-200 pb-2">
                 <Avatar
                   user={{
                     name: userName,
@@ -85,14 +85,14 @@ const NavBar = ({ setIsSidebarOpen, isSidebarOpen }) => {
                   <Typography style="body3">{email}</Typography>
                 </div>
               </div>
-              <div className="flex">
+              <div className="m-0 flex p-0">
                 <Button
-                  className="p-0 pt-2 text-black"
+                  className="m-0 p-2"
                   icon={LeftArrow}
                   iconPosition="left"
                   label={t("logout")}
                   size="small"
-                  style="link"
+                  style="danger-text"
                   onClick={handleLogout}
                 />
               </div>

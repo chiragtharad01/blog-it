@@ -5,9 +5,8 @@ import { Form, Input, Button } from "@bigbinary/neetoui/formik";
 import Logger from "js-logger";
 import { useTranslation } from "react-i18next";
 
-import { CATEGORY_VALIDATION_SCHEMA } from "./constants";
-
-import { useCreateCategory } from "../../hooks/reactQuery/useCategoriesApi";
+import { useCreateCategory } from "../../../hooks/reactQuery/useCategoriesApi";
+import { CATEGORY_VALIDATION_SCHEMA } from "../constants";
 
 const CreateCategoryModal = ({ isModalOpen, setIsModalOpen }) => {
   const { t } = useTranslation();

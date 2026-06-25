@@ -38,6 +38,13 @@ const CategoriesSidebar = ({ setIsModalOpen }) => {
     setSearchInput(e.target.value);
   };
 
+  const categoryContainerProps = {
+    categories,
+    handleCategoryClick,
+    isLoading,
+    selectedCategories,
+  };
+
   useEffect(() => {
     if (selectedCategories.length > 0) {
       history.push({
@@ -74,12 +81,7 @@ const CategoriesSidebar = ({ setIsModalOpen }) => {
           {showSearch && <Input onChange={handleChange} />}
         </div>
         <div className="flex w-full flex-col gap-3">
-          <CategoriesContainer
-            categories={categories}
-            handleCategoryClick={handleCategoryClick}
-            isLoading={isLoading}
-            selectedCategories={selectedCategories}
-          />
+          <CategoriesContainer {...categoryContainerProps} />
         </div>
       </div>
     </div>

@@ -3,8 +3,8 @@ import React from "react";
 import { Input, Select } from "@bigbinary/neetoui/formik";
 import { useTranslation } from "react-i18next";
 
-import { useCategories } from "../../hooks/reactQuery/useCategoriesApi";
-import { PageLoader } from "../commons";
+import { useCategories } from "../../../hooks/reactQuery/useCategoriesApi";
+import { PageLoader } from "../../commons";
 
 const CreateForm = () => {
   const { t } = useTranslation();

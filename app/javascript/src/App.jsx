@@ -6,12 +6,11 @@ import { ToastContainer } from "react-toastify";
 
 import Login from "./components/Authentication/Login";
 import Signup from "./components/Authentication/Signup";
-import { PrivateRoute } from "./components/commons";
-import PageNotFound from "./components/commons/PageNotFound";
+import { PageNotFound, PrivateRoute } from "./components/commons";
 import QueryProvider from "./components/commons/QueryProvider";
 import Posts from "./components/Posts";
-import CreatePost from "./components/Posts/CreatePost";
-import EditPost from "./components/Posts/EditPost";
+import CreatePost from "./components/Posts/Create/CreatePost";
+import EditPost from "./components/Posts/Edit/EditPost";
 import PostsCurrentUser from "./components/Posts/PostsCurrentUser";
 import ShowPost from "./components/Posts/Show";
 import routes from "./routes";

@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
 import CategoriesSidebar from "./CategoriesSidebar";
-import CreateCategoryModal from "./CreateCategoryModal";
+import CreateCategoryModal from "./CategoriesSidebar/CreateCategoryModal";
 import PostContainer from "./PostContainer";
 
 import { usePosts } from "../../hooks/reactQuery/usePostsApi";
@@ -33,12 +33,9 @@ const Posts = () => {
   }
 
   return (
-    <Container
-      isSidebarOpen={isSidebarOpen}
-      setIsSidebarOpen={setIsSidebarOpen}
-    >
+    <Container {...{ isSidebarOpen, setIsSidebarOpen }}>
       <div className="flex">
-        {isSidebarOpen && <CategoriesSidebar setIsModalOpen={setIsModalOpen} />}
+        {isSidebarOpen && <CategoriesSidebar {...{ setIsModalOpen }} />}
         <div className="w-full px-6">
           <PageTitle
             shouldShowButton
@@ -47,13 +44,10 @@ const Posts = () => {
             title={t("post.homeTitle")}
           />
           {isModalOpen && (
-            <CreateCategoryModal
-              isModalOpen={isModalOpen}
-              setIsModalOpen={setIsModalOpen}
-            />
+            <CreateCategoryModal {...{ isModalOpen, setIsModalOpen }} />
           )}
           <div className="flex w-full flex-col gap-3">
-            <PostContainer posts={posts} />
+            <PostContainer {...{ posts }} />
           </div>
         </div>
       </div>

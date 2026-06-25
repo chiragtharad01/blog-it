@@ -1,4 +1,5 @@
 {
+  "userNotAuthenticatedError": "You are not authorized to perform this task",
   "pageNotFound": {
     "button": "Back to home",
     "title": "Page not found"
