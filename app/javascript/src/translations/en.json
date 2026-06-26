@@ -18,6 +18,23 @@
     "confirmPassword": "Confirm password",
     "confirmPasswordPlaceholder": "Re enter password"
   },
+  "mypost": {
+    "actionDropDown": {
+      "label": "Column",
+      "title": "Title",
+      "category": "Category",
+      "lastPublishedAt": "Last published at",
+      "status": "Status"
+    },
+    "pane": {
+      "header": "Filters",
+      "inputTitle": "Title",
+      "inputTitlePlaceholder": "Enter title",
+      "inputCategory": "Category",
+      "inputCategoryPlaceholder": "Search category",
+      "status": "Status"
+    }
+  },
   "post": {
     "table": {
       "title": {
