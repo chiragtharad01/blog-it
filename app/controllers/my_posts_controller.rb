@@ -2,6 +2,12 @@
 
 class MyPostsController < ApplicationController
   def index
-    @posts = current_user.posts.includes(:categories)
+    @posts = MyPostsFilterService.new(current_user.posts.includes(:categories), my_posts_params).process
   end
+
+  private
+
+    def my_posts_params
+      params.fetch(:my_posts, {}).permit(:title, :status, category_ids: [])
+    end
 end

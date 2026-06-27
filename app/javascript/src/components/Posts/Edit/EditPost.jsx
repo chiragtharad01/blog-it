@@ -13,7 +13,7 @@ import EditForm from "./EditForm";
 
 import { useEditPost, usePost } from "../../../hooks/reactQuery/usePostsApi";
 import routes from "../../../routes";
-import useAuthStore from "../../../stores/authStore";
+import useAuthStore from "../../../stores/useAuthStore";
 import { Container, PageLoader, PageTitle } from "../../commons";
 import { POST_FORM_VALIDATION_SCHEMA } from "../constants";
 

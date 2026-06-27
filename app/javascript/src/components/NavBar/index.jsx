@@ -9,7 +9,7 @@ import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import { resetAuthTokens } from "../../apis/axios";
 import { useLogout } from "../../hooks/reactQuery/useAuthApi";
 import routes from "../../routes";
-import useAuthStore from "../../stores/authStore";
+import useAuthStore from "../../stores/useAuthStore";
 import { getButtonProps } from "../utils";
 
 const NavBar = ({ setIsSidebarOpen, isSidebarOpen }) => {

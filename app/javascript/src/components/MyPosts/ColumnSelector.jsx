@@ -3,7 +3,7 @@ import React from "react";
 import { ActionDropdown, Checkbox } from "@bigbinary/neetoui";
 import { useTranslation } from "react-i18next";
 
-import usePostTableStore from "../../stores/postTableStore";
+import usePostTableStore from "../../stores/usePostTableStore";
 
 const ColumnSelector = () => {
   const { t } = useTranslation();

@@ -6,7 +6,7 @@ import Logger from "js-logger";
 
 import { useLogin } from "../../hooks/reactQuery/useAuthApi";
 import routes from "../../routes";
-import useAuthStore from "../../stores/authStore";
+import useAuthStore from "../../stores/useAuthStore";
 
 const Login = () => {
   const login = useAuthStore(state => state.login);

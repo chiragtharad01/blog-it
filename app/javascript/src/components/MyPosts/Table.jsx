@@ -7,7 +7,7 @@ import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
 import PostAction from "./PostAction";
 
 import routes from "../../routes";
-import usePostTableStore from "../../stores/postTableStore";
+import usePostTableStore from "../../stores/usePostTableStore";
 import { formateDateTime } from "../utils";
 
 const PostTable = ({ posts }) => {

@@ -14,7 +14,7 @@ import CreatePost from "./components/Posts/Create/CreatePost";
 import EditPost from "./components/Posts/Edit/EditPost";
 import ShowPost from "./components/Posts/Show";
 import routes from "./routes";
-import useAuthStore from "./stores/authStore";
+import useAuthStore from "./stores/useAuthStore";
 
 const AppContent = () => {
   const authToken = useAuthStore(state => state.authToken);

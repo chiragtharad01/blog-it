@@ -1,7 +1,7 @@
 import { Toastr } from "@bigbinary/neetoui";
 import axios from "axios";
 
-import useAuthStore from "../stores/authStore";
+import useAuthStore from "../stores/useAuthStore";
 
 axios.defaults.baseURL = "/";
 

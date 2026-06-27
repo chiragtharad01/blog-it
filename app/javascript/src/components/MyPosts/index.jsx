@@ -6,15 +6,18 @@ import FilterPane from "./FilterPane";
 import PostTable from "./Table";
 import TableActions from "./TableActions";
 
-import { useCategories } from "../../hooks/reactQuery/useCategoriesApi";
 import { useMyPosts } from "../../hooks/reactQuery/useMyPostsApi";
+import useFilterStore from "../../stores/useFilterStore";
 import { Container, PageLoader, PageTitle } from "../commons";
 
 const PostsCurrentUser = () => {
   const [isPaneOpen, setIsPaneOpen] = useState(false);
-  const { data: { data: { posts = [] } = {} } = {}, isLoading } = useMyPosts();
+  const filters = useFilterStore(store => store.filters);
+  // console.log(filters);
+  const { data: { data: { posts = [] } = {} } = {}, isLoading } =
+    useMyPosts(filters);
   const { t } = useTranslation();
-  const { data: { data: { categories = [] } = {} } = {} } = useCategories();
+
   if (isLoading) {
     return (
       <Container>
@@ -33,7 +36,6 @@ const PostsCurrentUser = () => {
         <TableActions setIsPaneOpen={setIsPaneOpen} />
         <PostTable posts={posts} />
         <FilterPane
-          categories={categories}
           isPaneOpen={isPaneOpen}
           onClose={() => setIsPaneOpen(false)}
         />
