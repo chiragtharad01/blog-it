@@ -19,6 +19,16 @@
     "confirmPasswordPlaceholder": "Re enter password"
   },
   "mypost": {
+    "delete": {
+      "title": "Delete {{count}} rows?",
+      "message": "Are you sure you want to delete <1>{{count}} rows</1>?"
+    },
+    "count": "<1>{{count}} articles</1> selected of {{totalCount}}",
+    "dropDown": {
+      "draft": "Draft",
+      "publish": "Publish",
+      "label": "Change status"
+    },
     "actionDropDown": {
       "label": "Column",
       "title": "Title",

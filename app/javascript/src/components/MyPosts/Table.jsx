@@ -7,11 +7,13 @@ import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
 import PostAction from "./PostAction";
 
 import routes from "../../routes";
+import useBulkPostStore from "../../stores/useBulkPostStore";
 import usePostTableStore from "../../stores/usePostTableStore";
 import { formateDateTime } from "../utils";
 
 const PostTable = ({ posts }) => {
   const { t } = useTranslation();
+  const { selectedRowKeys, setSelectedRowKeys } = useBulkPostStore();
   const visibleColumns = usePostTableStore(state => state.visibleColumns);
   const columnData = [
     {
@@ -98,16 +100,6 @@ const PostTable = ({ posts }) => {
     lastPublishedAt: post.updated_at,
     ...post,
   }));
-  // if (isLoading) {
-  //   return (
-  //     <Container>
-  //       <div className="w-full px-6">
-  //         <PageTitle title={t("post.secondTitle")} />
-  //         <PageLoader />
-  //       </div>
-  //     </Container>
-  //   );
-  // }
 
   return (
     <Table
@@ -115,22 +107,20 @@ const PostTable = ({ posts }) => {
       className="max-w-screen w-min"
       columnData={columnData}
       currentPageNumber={1}
-      defaultPageSize={rowData?.length}
+      defaultPageSize={10}
       handlePageChange={() => {}}
       rowData={rowData}
       // selectedRowKeys={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]}
-      // totalCount={rowData?.length}
-      // bulkSelectAllRowsProps={{
-      //   selectAllRowButtonLabel: "Select all 55 users",
-      //   selectAllRowMessage: "All 15 users on this page are selected",
-      //   setBulkSelectedAllRows: () => {},
-      // }}
-      // onColumnAdd={() => {}}
-      // onColumnDelete={() => {}}
+      selectedRowKeys={selectedRowKeys}
+      totalCount={rowData?.length}
+      bulkSelectAllRowsProps={{
+        selectAllRowButtonLabel: "Select all 55 users",
+        selectAllRowMessage: "All 15 users on this page are selected",
+        setBulkSelectedAllRows: () => {},
+      }}
       // onColumnUpdate={() => {}}
-      // onMoreActionClick={() => {}}
       // onRowClick={() => {}}
-      // onRowSelect={() => {}}
+      onRowSelect={setSelectedRowKeys}
     />
   );
 };

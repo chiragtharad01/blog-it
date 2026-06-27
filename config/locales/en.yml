@@ -28,6 +28,8 @@
 #       enabled: "ON"
 
 en:
+  bulk_delete: "Successfully deleted all selected rows"
+  bulk_update: "Successfully updated selected rows status to %{entity}"
   authorization:
     denied: "Access denied. You are not authorized to perform this action"
   session:

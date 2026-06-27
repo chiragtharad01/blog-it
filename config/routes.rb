@@ -2,7 +2,10 @@
 
 Rails.application.routes.draw do
   constraints(lambda { |req| req.format == :json }) do
-    resources :my_posts, only: :index
+    resources :my_posts, only: :index do
+      delete "bulk_delete", on: :collection
+      patch "bulk_update_status", on: :collection
+    end
     resources :posts, except: %i[new edit], param: :slug
     resources :users, only: %i[index create]
     resources :categories, only: %i[index create], param: :slug
