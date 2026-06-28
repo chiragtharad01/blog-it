@@ -19,6 +19,12 @@ class Post < ApplicationRecord
 
   before_create :set_slug
 
+  def update_bloggable!
+    update!(
+      is_bloggable: (upvotes - downvotes) >= Constants::BLOGGABLE_THRESHOLD
+    )
+  end
+
   private
 
     def set_slug
@@ -43,11 +49,5 @@ class Post < ApplicationRecord
       if will_save_change_to_slug? && self.persisted?
         errors.add(:slug, I18n.t("post.slug.immutable"))
       end
-    end
-
-    def update_bloggable!
-      update!(
-        is_bloggable: (upvotes - downvotes) >= Constants::BLOGGABLE_THRESHOLD
-      )
     end
 end

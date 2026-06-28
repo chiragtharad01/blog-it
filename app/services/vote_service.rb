@@ -32,7 +32,7 @@ class VoteService
   private
 
     def find_vote
-      post.votes.find_by!(user: current_user)
+      post.votes.find_by(user: current_user)
     end
 
     def create_upvote
@@ -52,14 +52,14 @@ class VoteService
     def remove_upvote(vote)
       Vote.transaction do
         vote.destroy!
-        post.decrement!(:upvote)
+        post.decrement!(:upvotes)
       end
     end
 
     def remove_downvote(vote)
       Vote.transaction do
         vote.destroy!
-        post.decrement!(:downvote)
+        post.decrement!(:downvotes)
       end
     end
 

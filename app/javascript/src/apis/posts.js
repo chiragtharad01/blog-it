@@ -16,6 +16,18 @@ const updateStatus = (slug, status) =>
     quite: true,
   });
 
-const postsApi = { fetch, create, show, update, destroy, updateStatus };
+const upvote = slug => axios.patch(`/posts/${slug}/upvote`);
+const downvote = slug => axios.patch(`/posts/${slug}/downvote`);
+
+const postsApi = {
+  fetch,
+  create,
+  show,
+  update,
+  destroy,
+  updateStatus,
+  upvote,
+  downvote,
+};
 
 export default postsApi;

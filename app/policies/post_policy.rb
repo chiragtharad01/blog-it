@@ -12,6 +12,14 @@ class PostPolicy
     post.status == "publish" || post.user_id == user.id
   end
 
+  def upvote?
+    show?
+  end
+
+  def downvote?
+    show?
+  end
+
   def edit?
     post.user_id == user.id
   end

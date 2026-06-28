@@ -4,6 +4,7 @@ class Vote < ApplicationRecord
   enum :vote_type, { upvote: "upvote", downvote: "downvote" }
   belongs_to :user
   belongs_to :post
+  after_commit :update_post_bloggable
 
   private
 

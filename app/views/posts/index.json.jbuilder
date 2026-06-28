@@ -6,7 +6,10 @@ json.posts @posts do |post|
     :title,
     :slug,
     :updated_at,
-    :description
+    :description,
+    :is_bloggable,
+    :upvotes,
+    :downvotes
   json.user do
     json.extract! post.user,
       :id,

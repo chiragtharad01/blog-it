@@ -45,11 +45,15 @@ class PostsController < ApplicationController
 
   def upvote
     post = Post.find_by!(slug: params[:slug])
+
+    authorize post
     VoteService.new(post, current_user).upvote
   end
 
   def downvote
     post = Post.find_by!(slug: params[:slug])
+
+    authorize post
     VoteService.new(post, current_user).downvote
   end
 

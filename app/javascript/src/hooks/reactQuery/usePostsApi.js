@@ -80,3 +80,24 @@ export const useUpdatePostStatus = () => {
     }
   );
 };
+
+export const useUpvotePost = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation(slug => postsApi.upvote(slug), {
+    onSuccess: () => {
+      queryClient.invalidateQueries(QUERY_KEYS.POSTS);
+      queryClient.invalidateQueries(QUERY_KEYS.POST);
+    },
+  });
+};
+export const useDownvotePost = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation(slug => postsApi.downvote(slug), {
+    onSuccess: () => {
+      queryClient.invalidateQueries(QUERY_KEYS.POSTS);
+      queryClient.invalidateQueries(QUERY_KEYS.POST);
+    },
+  });
+};
