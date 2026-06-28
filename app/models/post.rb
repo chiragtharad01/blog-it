@@ -7,6 +7,7 @@ class Post < ApplicationRecord
 
   enum :status, { draft: "draft", publish: "publish" }, default: :draft
   has_and_belongs_to_many :categories
+  has_many :votes, dependent: :destroy
   belongs_to :user
   belongs_to :organization
 
@@ -42,5 +43,11 @@ class Post < ApplicationRecord
       if will_save_change_to_slug? && self.persisted?
         errors.add(:slug, I18n.t("post.slug.immutable"))
       end
+    end
+
+    def update_bloggable!
+      update!(
+        is_bloggable: (upvotes - downvotes) >= Constants::BLOGGABLE_THRESHOLD
+      )
     end
 end

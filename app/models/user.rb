@@ -6,6 +6,7 @@ class User < ApplicationRecord
   MIN_PASSWORD_LENGTH = 6
   belongs_to :organization
   has_many :posts, dependent: :destroy
+  has_many :votes, dependent: :destroy
   has_secure_password
   has_secure_token :authentication_token
 

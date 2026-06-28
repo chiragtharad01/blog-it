@@ -43,6 +43,16 @@ class PostsController < ApplicationController
     render_notice(t("successfully_deleted", entity: "Post"))
   end
 
+  def upvote
+    post = Post.find_by!(slug: params[:slug])
+    VoteService.new(post, current_user).upvote
+  end
+
+  def downvote
+    post = Post.find_by!(slug: params[:slug])
+    VoteService.new(post, current_user).downvote
+  end
+
   private
 
     def post_params

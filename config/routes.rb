@@ -6,7 +6,10 @@ Rails.application.routes.draw do
       delete "bulk_delete", on: :collection
       patch "bulk_update_status", on: :collection
     end
-    resources :posts, except: %i[new edit], param: :slug
+    resources :posts, except: %i[new edit], param: :slug do
+      patch "upvote", on: :member
+      patch "downvote", on: :member
+    end
     resources :users, only: %i[index create]
     resources :categories, only: %i[index create], param: :slug
     resource :session, only: %i[create destroy]
