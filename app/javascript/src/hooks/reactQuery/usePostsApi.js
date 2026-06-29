@@ -101,3 +101,9 @@ export const useDownvotePost = () => {
     },
   });
 };
+
+export const useCreateReport = () =>
+  useMutation(slug => postsApi.createReport(slug));
+
+export const useDownloadReport = () =>
+  useMutation(slug => postsApi.downloadReport(slug));

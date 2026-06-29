@@ -28,6 +28,11 @@
 #       enabled: "ON"
 
 en:
+  report:
+    render: "Rendering the report"
+    generate: "Generating the PDF report"
+    saving: "Saving the PDF"
+    ready: "Report is ready"
   bulk_delete: "Successfully deleted all selected rows"
   bulk_update: "Successfully updated selected rows status to %{entity}"
   authorization:

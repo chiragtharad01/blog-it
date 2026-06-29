@@ -9,6 +9,9 @@ Rails.application.routes.draw do
     resources :posts, except: %i[new edit], param: :slug do
       patch "upvote", on: :member
       patch "downvote", on: :member
+      resource :report, only: %i[create], module: :posts do
+        get :download, on: :collection
+      end
     end
     resources :users, only: %i[index create]
     resources :categories, only: %i[index create], param: :slug

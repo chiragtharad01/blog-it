@@ -19,6 +19,10 @@ const updateStatus = (slug, status) =>
 const upvote = slug => axios.patch(`/posts/${slug}/upvote`);
 const downvote = slug => axios.patch(`/posts/${slug}/downvote`);
 
+const createReport = slug => axios.post(`/posts/${slug}/report`);
+const downloadReport = slug =>
+  axios.get(`posts/${slug}/report/download`, { responseType: "blob" });
+
 const postsApi = {
   fetch,
   create,
@@ -28,6 +32,8 @@ const postsApi = {
   updateStatus,
   upvote,
   downvote,
+  createReport,
+  downloadReport,
 };
 
 export default postsApi;

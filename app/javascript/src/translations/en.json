@@ -46,6 +46,9 @@
     }
   },
   "post": {
+    "report": {
+      "title": "Downloading blog post"
+    },
     "table": {
       "title": {
         "title": "title",

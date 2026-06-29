@@ -1,18 +1,74 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-import { Edit } from "@bigbinary/neeto-icons";
+import { Download, Edit } from "@bigbinary/neeto-icons";
 import { Avatar, Button, Typography } from "@bigbinary/neetoui";
+import Logger from "js-logger";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
-import { usePost } from "../../hooks/reactQuery/usePostsApi";
+import DownloadReportModal from "./DownloadReportModal";
+
+import createConsumer from "../../channels/consumer";
+import { subscribeToReportDownloadChannel } from "../../channels/reportDownloadChannel";
+import { useCreateReport, usePost } from "../../hooks/reactQuery/usePostsApi";
 import routes from "../../routes";
+import pollDownload from "../../utils/pollDownload";
 import { Container, PageLoader } from "../commons";
 import { formatDate } from "../utils";
 
 const ShowPost = () => {
   const { slug } = useParams();
+
+  const consumer = createConsumer();
+
+  const createReport = useCreateReport();
+
+  const [isReportGenerating, setIsReportGenerating] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [message, setMessage] = useState("");
+
   const { data: { data: { post = {} } = {} } = {}, isLoading } = usePost(slug);
-  const showTag = post.status === "draft";
+
+  const handleDownload = async () => {
+    try {
+      setIsReportGenerating(true);
+      setProgress(0);
+      setMessage("");
+
+      await createReport.mutateAsync(slug);
+    } catch (error) {
+      Logger.error(error);
+      setIsReportGenerating(false);
+    }
+  };
+
+  useEffect(() => {
+    const subscription = subscribeToReportDownloadChannel({
+      consumer,
+      setMessage,
+      setProgress,
+    });
+
+    return () => {
+      subscription.unsubscribe();
+      consumer.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (progress !== 100) return;
+
+    const download = async () => {
+      try {
+        await pollDownload(slug);
+      } catch (error) {
+        Logger.error(error);
+      } finally {
+        setIsReportGenerating(false);
+      }
+    };
+
+    download();
+  }, [progress]);
 
   if (isLoading) {
     return (
@@ -42,7 +98,7 @@ const ShowPost = () => {
               <Typography className="text-3xl" style="h2" weight="bold">
                 {post.title}
               </Typography>
-              {showTag && (
+              {post.status === "draft" && (
                 <Typography
                   className="neeto-ui-rounded-full h-min min-w-min border border-red-500 px-3 py-0 text-red-500"
                   style="nano"
@@ -51,12 +107,22 @@ const ShowPost = () => {
                 </Typography>
               )}
             </div>
-            <Button
-              className="text-black"
-              icon={Edit}
-              style="link"
-              to={routes.posts.edit(slug)}
-            />
+            <div className="flex items-center">
+              <Button
+                className="text-black"
+                disabled={isReportGenerating}
+                icon={Download}
+                loading={isReportGenerating}
+                style="link"
+                onClick={handleDownload}
+              />
+              <Button
+                className="text-black"
+                icon={Edit}
+                style="link"
+                to={routes.posts.edit(slug)}
+              />
+            </div>
           </div>
           <div className="flex gap-4">
             <Avatar
@@ -74,6 +140,11 @@ const ShowPost = () => {
           <Typography style="body1">{post.description}</Typography>
         </div>
       </div>
+      <DownloadReportModal
+        isOpen={isReportGenerating}
+        message={message}
+        progress={progress}
+      />
     </Container>
   );
 };
