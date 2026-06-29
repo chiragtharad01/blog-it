@@ -83,6 +83,6 @@ gem "wicked_pdf"
 gem "wkhtmltopdf-binary"
 
 gem "redis"
-gem "sidekiq", "~> 7.0"
+gem "sidekiq", "~> 8.0"
 # To load the environment variables
 gem "dotenv-rails"
