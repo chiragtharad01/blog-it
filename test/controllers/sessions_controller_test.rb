@@ -27,4 +27,9 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     response_json = response.parsed_body
     assert_equal "Couldn't find User", response_json["error"]
   end
+
+  def test_should_logout_user
+    delete session_path, headers: headers(@user)
+    assert_response :success
+  end
 end

@@ -9,7 +9,7 @@ class UsersController < ApplicationController
   def show
     # user = User.find_by!(params[:id]).select(:id, :name)
     @user = User.select(:id, :name).find(params[:id])
-    render status: :ok, json: { user: }
+    render status: :ok, json: { user: @user }
   end
 
   def create

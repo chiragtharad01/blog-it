@@ -7,13 +7,13 @@ class PostsController < ApplicationController
   def index
     @current_user = current_user
     posts = policy_scope(Post)
-    # @posts = posts.includes(:user, :categories).where(users: { organization_id: current_user.organization_id })
     @posts = posts.includes(:user, :categories)
-    if params[:categories].present?
-      categories = params[:categories].split(",")
-      post_ids = @posts.joins(:categories).where(categories: { slug: categories }).pluck(:id)
-      @posts = @posts.where(id: post_ids)
-    end
+    # if params[:categories].present?
+    #   categories = params[:categories].split(",")
+    #   post_ids = @posts.joins(:categories).where(categories: { slug: categories }).pluck(:id)
+    #   @posts = @posts.where(id: post_ids)
+    # end
+    @posts = PostFilterService.new(posts, params).process
   end
 
   def create

@@ -13,7 +13,7 @@ Rails.application.routes.draw do
         get :download, on: :collection
       end
     end
-    resources :users, only: %i[index create]
+    resources :users, only: %i[index create show]
     resources :categories, only: %i[index create], param: :slug
     resource :session, only: %i[create destroy]
   end

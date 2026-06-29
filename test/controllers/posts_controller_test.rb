@@ -185,4 +185,60 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
   end
+
+  def test_should_upvote_post_on_click_upvote
+    assert_difference("Vote.count", 1) do
+      patch upvote_post_path(@post.slug, format: :json),
+        headers: @headers
+    end
+
+    assert_response :success
+
+    @post.reload
+
+    assert_equal 1, @post.upvotes
+    assert_equal 0, @post.downvotes
+  end
+
+  def test_should_remove_upvote
+    create(:vote, user: @user, post: @post, vote_type: :upvote)
+    @post.update!(upvotes: 1)
+
+    assert_difference("Vote.count", -1) do
+      patch upvote_post_path(@post.slug, format: :json),
+        headers: @headers
+    end
+
+    @post.reload
+
+    assert_equal 0, @post.upvotes
+  end
+
+  def test_should_downvote_post
+    assert_difference("Vote.count", 1) do
+      patch downvote_post_path(@post.slug, format: :json),
+        headers: @headers
+    end
+
+    assert_response :success
+
+    @post.reload
+
+    assert_equal 1, @post.downvotes
+    assert_equal 0, @post.upvotes
+  end
+
+  def test_should_remove_downvote
+    create(:vote, user: @user, post: @post, vote_type: :downvote)
+    @post.update!(downvotes: 1)
+
+    assert_difference("Vote.count", -1) do
+      patch downvote_post_path(@post.slug, format: :json),
+        headers: @headers
+    end
+
+    @post.reload
+
+    assert_equal 0, @post.downvotes
+  end
 end

@@ -88,4 +88,14 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :unprocessable_entity
   end
+
+  def test_should_show_user
+    get user_path(@user.id, format: :json), headers: @headers
+    assert_response :success
+    response_json = response.parsed_body["user"]
+
+    assert_equal @user.id, response_json["id"]
+    assert_equal @user.name, response_json["name"]
+    assert_nil response_json["email"]
+  end
 end
