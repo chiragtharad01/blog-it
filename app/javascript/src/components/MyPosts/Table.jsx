@@ -37,7 +37,6 @@ const PostTable = ({ posts }) => {
       ),
       key: "title",
       title: t("post.table.title.title"),
-      // width: widths.title,
     },
     {
       dataIndex: "category",
@@ -51,7 +50,6 @@ const PostTable = ({ posts }) => {
         </Typography>
       ),
       title: t("post.table.title.category"),
-      // width: widths.category,
     },
     {
       dataIndex: "lastPublishedAt",
@@ -65,7 +63,6 @@ const PostTable = ({ posts }) => {
           {formateDateTime(lastPublishedAt)}
         </Typography>
       ),
-      // width: widths.publishedAt,
     },
     {
       dataIndex: "status",
@@ -79,7 +76,6 @@ const PostTable = ({ posts }) => {
           {status.charAt(0).toUpperCase() + status.slice(1)}
         </Typography>
       ),
-      // width: widths.status,
     },
     {
       dataIndex: "action",
@@ -90,7 +86,6 @@ const PostTable = ({ posts }) => {
         </div>
       ),
       title: t("post.table.title.action"),
-      // width: widths.action,
     },
   ];
 
@@ -110,7 +105,6 @@ const PostTable = ({ posts }) => {
       defaultPageSize={10}
       handlePageChange={() => {}}
       rowData={rowData}
-      // selectedRowKeys={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]}
       selectedRowKeys={selectedRowKeys}
       totalCount={rowData?.length}
       bulkSelectAllRowsProps={{
@@ -118,8 +112,6 @@ const PostTable = ({ posts }) => {
         selectAllRowMessage: "All 15 users on this page are selected",
         setBulkSelectedAllRows: () => {},
       }}
-      // onColumnUpdate={() => {}}
-      // onRowClick={() => {}}
       onRowSelect={setSelectedRowKeys}
     />
   );

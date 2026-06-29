@@ -25,8 +25,6 @@ const bulk_delete = params =>
 const bulk_update = params =>
   axios.patch("/my_posts/bulk_update_status", {
     bulk_params: params,
-    // paramsSerializer: params =>
-    //   qs.stringify(params.ids, { arrayFormat: "brackets" }),
   });
 const myPostsApi = { fetch, bulk_delete, bulk_update };
 

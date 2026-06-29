@@ -1,4 +1,3 @@
-// import { keysToSnakeCase } from "neetocist";
 import { omit, pipe, toPairs } from "ramda";
 
 export const buildUrl = (route, params) => {
