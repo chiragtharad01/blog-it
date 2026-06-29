@@ -11,13 +11,14 @@ import createConsumer from "../../channels/consumer";
 import { subscribeToReportDownloadChannel } from "../../channels/reportDownloadChannel";
 import { useCreateReport, usePost } from "../../hooks/reactQuery/usePostsApi";
 import routes from "../../routes";
+import useAuthStore from "../../stores/useAuthStore";
 import pollDownload from "../../utils/pollDownload";
 import { Container, PageLoader } from "../commons";
 import { formatDate } from "../utils";
 
 const ShowPost = () => {
   const { slug } = useParams();
-
+  const currentUser = useAuthStore(store => store.authUserId);
   const consumer = createConsumer();
 
   const createReport = useCreateReport();
@@ -27,6 +28,7 @@ const ShowPost = () => {
   const [message, setMessage] = useState("");
 
   const { data: { data: { post = {} } = {} } = {}, isLoading } = usePost(slug);
+  const showEditButton = post?.user?.id === currentUser;
 
   const handleDownload = async () => {
     try {
@@ -116,12 +118,14 @@ const ShowPost = () => {
                 style="link"
                 onClick={handleDownload}
               />
-              <Button
-                className="text-black"
-                icon={Edit}
-                style="link"
-                to={routes.posts.edit(slug)}
-              />
+              {showEditButton && (
+                <Button
+                  className="text-black"
+                  icon={Edit}
+                  style="link"
+                  to={routes.posts.edit(slug)}
+                />
+              )}
             </div>
           </div>
           <div className="flex gap-4">
