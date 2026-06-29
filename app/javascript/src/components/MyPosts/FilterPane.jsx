@@ -4,6 +4,7 @@ import { Pane, Typography } from "@bigbinary/neetoui";
 import { Form, Button as FormikButton } from "@bigbinary/neetoui/formik";
 import { useTranslation } from "react-i18next";
 
+import { FILTER_INITIAL_VALUES } from "./constants";
 import FilterFormContent from "./FilterFormContent";
 
 import useFilterStore from "../../stores/useFilterStore";
@@ -29,18 +30,21 @@ const FilterPane = ({ isPaneOpen, onClose }) => {
           },
         }}
       >
-        {resetForm => (
+        {({ resetForm }) => (
           <>
             <Pane.Body className="w-full">
               <FilterFormContent />
             </Pane.Body>
             <Pane.Footer className="flex items-center gap-x-2">
-              <FormikButton label="Done" type="submit" />
+              <FormikButton label={t("done")} type="submit" />
               <FormikButton
-                label="Cancel"
+                disabled={false}
+                label={t("clearFilters")}
                 style="text"
                 onClick={() => {
-                  resetForm();
+                  resetForm({ values: FILTER_INITIAL_VALUES });
+                  setFilters(FILTER_INITIAL_VALUES);
+                  onClose();
                 }}
               />
             </Pane.Footer>

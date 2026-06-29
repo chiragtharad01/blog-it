@@ -1,4 +1,7 @@
 {
+  "clearFilters": "Clear filters",
+  "blogIt": "Blog it",
+  "done": "Done",
   "userNotAuthenticatedError": "You are not authorized to perform this task",
   "pageNotFound": {
     "button": "Back to home",
@@ -11,6 +14,8 @@
   "logout": "Logout",
   "submit": "Submit",
   "form": {
+    "name": "Name",
+    "namePlaceholder": "Enter name",
     "email": "Email",
     "emailPlaceholder": "Enter email",
     "password": "Password",

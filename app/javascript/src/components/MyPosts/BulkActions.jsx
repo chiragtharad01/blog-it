@@ -66,7 +66,7 @@ const BulkActions = ({ totalPosts, selectedRowKeys }) => {
           icon={Delete}
           iconPosition="right"
           iconSize={16}
-          label="Delete"
+          label={t("post.status.delete")}
           style="danger-text"
           onClick={() => setIsDeleteAlertOpen(true)}
         />

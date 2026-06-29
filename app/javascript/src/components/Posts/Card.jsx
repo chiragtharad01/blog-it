@@ -4,6 +4,7 @@ import { DownArrow, UpArrow } from "@bigbinary/neeto-icons";
 import { Button, Tag, Typography } from "@bigbinary/neetoui";
 import classNames from "classnames";
 import Logger from "js-logger";
+import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
 
 import {
@@ -25,6 +26,7 @@ const Card = ({
   is_bloggable,
   current_user_vote,
 }) => {
+  const { t } = useTranslation();
   const upvote = useUpvotePost();
   const downvote = useDownvotePost();
   const handleUpvote = async () => {
@@ -55,7 +57,7 @@ const Card = ({
           {is_bloggable && (
             <Tag
               className="bg-white"
-              label="Blog it"
+              label={t("blogIt")}
               style="primary"
               type="outline"
             />

@@ -7,7 +7,6 @@ import { useCategories } from "../../hooks/reactQuery/useCategoriesApi";
 
 const FilterFormContent = () => {
   const { t } = useTranslation();
-  // const history = useHistory();
   const { data: { data: { categories = [] } = {} } = {} } = useCategories();
   const categoryOptions = categories.map(category => ({
     value: category.slug,
@@ -17,11 +16,11 @@ const FilterFormContent = () => {
   const statusOptions = [
     {
       value: "publish",
-      label: "Publish",
+      label: t("mypost.dropDown.publish"),
     },
     {
       value: "draft",
-      label: "Draft",
+      label: t("mypost.dropDown.draft"),
     },
   ];
 

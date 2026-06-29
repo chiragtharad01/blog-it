@@ -28,7 +28,6 @@ const SignupForm = ({ handleSubmit, t }) => (
           {t("signupTitle")}
         </Typography>
         <Typography className="w-full text-center" style="body2">
-          {/* {t("yesAccount")} */}
           <Trans
             i18nKey="yesAccount"
             components={{
@@ -38,7 +37,12 @@ const SignupForm = ({ handleSubmit, t }) => (
         </Typography>
       </div>
       <div className="flex w-full flex-col gap-6">
-        <Input required label="Name" name="name" placeholder="Enter name" />
+        <Input
+          required
+          label={t("form.name")}
+          name="name"
+          placeholder={t("form.namePlaceholder")}
+        />
         <Input
           required
           label={t("form.email")}
