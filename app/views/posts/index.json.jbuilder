@@ -10,6 +10,7 @@ json.posts @posts do |post|
     :is_bloggable,
     :upvotes,
     :downvotes
+  json.current_user_vote post.votes.find_by(user: @current_user)&.vote_type
   json.user do
     json.extract! post.user,
       :id,

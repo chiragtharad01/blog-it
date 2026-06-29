@@ -2,6 +2,7 @@ import React from "react";
 
 import { DownArrow, UpArrow } from "@bigbinary/neeto-icons";
 import { Button, Tag, Typography } from "@bigbinary/neetoui";
+import classNames from "classnames";
 import Logger from "js-logger";
 import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
 
@@ -22,6 +23,7 @@ const Card = ({
   upvotes,
   downvotes,
   is_bloggable,
+  current_user_vote,
 }) => {
   const upvote = useUpvotePost();
   const downvote = useDownvotePost();
@@ -91,6 +93,10 @@ const Card = ({
           disabled={upvote.isLoading || downvote.isLoading}
           icon={UpArrow}
           iconSize={16}
+          style="text"
+          className={classNames({
+            "text-green-500": current_user_vote === "upvote",
+          })}
           onClick={handleUpvote}
         />
         <Typography style="h6">{upvotes - downvotes}</Typography>
@@ -98,6 +104,10 @@ const Card = ({
           disabled={upvote.isLoading || downvote.isLoading}
           icon={DownArrow}
           iconSize={16}
+          style="text"
+          className={classNames({
+            "text-red-600": current_user_vote === "downvote",
+          })}
           onClick={handleDownvote}
         />
       </div>

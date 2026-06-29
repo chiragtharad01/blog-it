@@ -5,6 +5,7 @@ class PostsController < ApplicationController
   after_action :verify_authorized, except: :index
   after_action :verify_policy_scoped, only: :index
   def index
+    @current_user = current_user
     posts = policy_scope(Post)
     # @posts = posts.includes(:user, :categories).where(users: { organization_id: current_user.organization_id })
     @posts = posts.includes(:user, :categories)
